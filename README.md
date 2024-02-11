@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+# Chain Hire DApp
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
 
-## Available Scripts
+Chain Hire is a decentralized application (DApp) designed to revolutionize the job market by leveraging blockchain technology. By tokenizing job roles as Non-Fungible Tokens (NFTs) on the Arbitrum chain, Chain Hire introduces a new paradigm in recruitment, offering unprecedented security, efficiency, and user experience.  The platform integrates encrypted job profiles, a robust billing and subscription model, and smart contract functionalities to ensure transparency and authenticity in the recruitment process.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Job Role Tokenization:** Mint and trade Job Role NFTs to represent unique job listings, ensuring a transparent and efficient job market.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Encrypted Job Profiles:** Enable job seekers to create NFTs that hold encrypted job profile data, including resumes and credentials. These NFTs enhance privacy and data protection, allowing job seekers to control who can access their information.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Smart Contract Automation:** Utilize smart contracts for managing job listings, applications, encrypted profile access, and transactional processes on the Arbitrum blockchain.
 
-### `npm test`
+- **Verification System:** Implement a robust verification system for Hiring and Recruiting Companies to ensure authenticity and trustworthiness before granting full access to the platform's features.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Subscription and Billing System:** A comprehensive subscription model with integrated billing for platform services, accessible to verified companies.
 
-### `npm run build`
+## Getting Started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prerequisites
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Node.js (Latest Stable Version)
+- Yarn Package Manager
+- Git
+- A supported web browser (e.g., Chrome, Firefox)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Setup
 
-### `npm run eject`
+1. **Clone the Repository**
+git clone https://github.com/<username>/chain-hire-dapp.git
+cd chain-hire-dapp
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **Install Dependencies**
+yarn install
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Running the Development Server**
+yarn start
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. **Building for Production**
+yarn build
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Architecture
 
-## Learn More
+Chain Hire leverages React for the frontend, with smart contracts deployed on the Arbitrum blockchain for backend logic, incorporating features such as:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Frontend UI:** Provides an interactive layer for job seekers, hiring companies, and recruiting firms, with support for encrypted profile viewing and verification processes.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Smart Contracts:** Manage job listings, applications, encrypted profile decryption key exchanges, and automate the verification system.
 
-### Code Splitting
+- **Verification System:** A secure process to verify companies and recruiting firms, integrating with the smart contracts to ensure a trusted platform environment.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **Subscription and Billing:** Manages platform subscriptions and payments, accessible to verified companies through smart contract integration.
 
-### Analyzing the Bundle Size
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+This software and its content are proprietary to Chain Hire Development Team. Unauthorized copying of the files, including the software, its source code, and associated documentation, or any portion of it, is strictly prohibited and constitutes a violation of copyright law.
 
-### Making a Progressive Web App
+Use, reproduction, disclosure, and distribution by any means, without the express written permission of Chain Hire Development Team, are strictly prohibited. For inquiries about obtaining a license to use this software or for any other questions, please contact info@chainhire.com.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+© 2024 Chain Hire Development Team. All rights reserved.
 
-### Advanced Configuration
+## Acknowledgments
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Arbitrum for the blockchain infrastructure.
+- React for the frontend framework.
 
-### Deployment
+## Contact
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For any queries or further information, we will provide a main channel of support in the future.
