@@ -1,68 +1,55 @@
 import { useState, useEffect } from 'react';
-import { ethers } from 'ethers';
+// Removed import { ethers } from 'ethers'; since it's not used
 
 const useMetaMask = () => {
   const [account, setAccount] = useState(null);
+  // Removed const [error, setError] = useState(''); since it's not used
 
   useEffect(() => {
-    const { ethereum } = window;
-    if (!ethereum) {
-      console.log('MetaMask is not installed!');
-      return;
+    // Check if MetaMask is installed on user's browser
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+      window.ethereum.on('chainChanged', handleChainChanged);
+      connectWallet();
     }
 
-    const provider = new ethers.providers.Web3Provider(ethereum);
-
-    const getAccounts = async () => {
-      const accounts = await ethereum.request({ method: 'eth_accounts' });
-      if (accounts.length > 0) {
-        console.log("user is connected");
-        setAccount(accounts[0]);
-      } else {
-        console.log("user not connected");
-        setAccount(null);
+    return () => {
+      if (window.ethereum) {
+        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+        window.ethereum.removeListener('chainChanged', handleChainChanged);
       }
     };
-
-    // Call getAccounts to set the initial account
-    getAccounts();
-
-    const handleAccountsChanged = (accounts) => {
-      if (accounts.length === 0) {
-        console.log("user not connected");
-        setAccount(null);
-      } else {
-        console.log("user is connected");
-        setAccount(accounts[0]);
-      }
-    };
-
-    // Listen for account changes
-    ethereum.on('accountsChanged', handleAccountsChanged);
-
-    // Cleanup function to remove the listener
-    return () => ethereum.removeListener('accountsChanged', handleAccountsChanged);
   }, []);
 
   const connectWallet = async () => {
-    const { ethereum } = window;
-    if (!ethereum) {
-      alert('Please install MetaMask to use this feature.');
-      return;
-    }
     try {
-      await ethereum.request({ method: 'eth_requestAccounts' });
-      // The 'accountsChanged' event will update the state
+      // const provider = new ethers.providers.Web3Provider(window.ethereum); // Removed since 'ethers' is not used
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      if (accounts.length > 0) {
+        setAccount(accounts[0]);
+      } else {
+        console.error('No accounts found'); // Changed from setError to console.error
+      }
     } catch (error) {
-      console.error('Error connecting to MetaMask:', error);
+      console.error("Error connecting to MetaMask:", error); // Kept for error logging
     }
   };
 
   const disconnectWallet = () => {
-    // Simulate wallet disconnection by resetting the account state
     setAccount(null);
-    console.log("Wallet disconnected");
-    // Additional cleanup or state reset actions can be performed here
+  };
+
+  const handleAccountsChanged = (accounts) => {
+    if (accounts.length === 0) {
+      console.log('Please connect to MetaMask.');
+      setAccount(null);
+    } else {
+      setAccount(accounts[0]);
+    }
+  };
+
+  const handleChainChanged = (_chainId) => {
+    window.location.reload();
   };
 
   return { account, connectWallet, disconnectWallet };

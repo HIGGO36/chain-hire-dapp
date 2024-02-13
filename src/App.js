@@ -1,26 +1,55 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import MetaMaskWallet from './components/MetaMaskWallet';
-import B2BHomePage from './components/B2BHomePage';
-import useMetaMask from './hooks/useMetaMask';
-import useB2BVerification from './hooks/useB2BVerification';
+import React, { useState, useEffect } from 'react';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import AppBar from './components/AppBar';
+import SignUp from './components/SignUp';
+import SignIn from './components/SignIn';
+import Button from '@mui/material/Button';
 
-const App = () => {
-  const { account, connectWallet, disconnectWallet } = useMetaMask();
-  const isVerified = useB2BVerification(account);
+function App() {
+  const [user, setUser] = useState(null); // Tracks the user's authentication state
+  const [initialCheckDone, setInitialCheckDone] = useState(false); // Indicates initial auth check completion
 
-  // Since we're using Router here, there's no need to directly use useNavigate.
-  // Navigation logic can be adjusted based on state directly within the Routes and Route components.
+  useEffect(() => {
+    const auth = getAuth();
+    // Listen for authentication state changes
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setInitialCheckDone(true); // Mark initial check as done after receiving the current user status
+    });
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []);
+
+  const handleSignOut = () => {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      console.log("User signed out successfully");
+    }).catch((error) => {
+      console.error("Error signing out:", error);
+    });
+  };
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={!account ? <MetaMaskWallet onConnected={connectWallet} onDisconnected={disconnectWallet} /> : (isVerified ? <Navigate replace to="/b2b-home" /> : <p>Verifying...</p>)} />
-        <Route path="/b2b-home" element={isVerified ? <B2BHomePage account={account} onDisconnect={disconnectWallet} /> : <Navigate replace to="/" />} />
-        {/* Add other routes as needed */}
-      </Routes>
-    </Router>
+    <div>
+      <AppBar/>
+      {/* Show SignUp component only if it's a first-time visit (no user and initial check done) */}
+      {!user && initialCheckDone && <SignUp />}
+      {/* Show SignIn component only if there's no user logged in (consider adding additional control if needed) */}
+      {!user && <SignIn />}
+      {user && (
+        <div>
+          <p>Welcome, {user.email}</p>
+          <Button variant="contained" color="secondary" onClick={handleSignOut}>
+            Sign Out
+          </Button>
+        </div>
+      )}
+    </div>
   );
-};
+}
 
 export default App;

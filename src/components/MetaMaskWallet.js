@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
-import useMetaMask from '../hooks/useMetaMask';
+import { useMetaMaskContext } from '../contexts/MetaMaskContext';
 
 const MetaMaskWallet = () => {
-  const { account, connectWallet, disconnectWallet } = useMetaMask();
+  const { account, connectWallet, disconnectWallet } = useMetaMaskContext();
 
   return (
     <div>
@@ -14,10 +14,8 @@ const MetaMaskWallet = () => {
       ) : (
         <>
           <Button variant="contained" color="secondary" disabled>
-            Connected
+            Connected - {account.substring(account.length - 4)}
           </Button>
-          <p>Account: {account}</p>
-          {/* If you want to provide a disconnect button */}
           <Button variant="contained" color="primary" onClick={disconnectWallet}>
             Disconnect Wallet
           </Button>
