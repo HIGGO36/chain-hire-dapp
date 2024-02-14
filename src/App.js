@@ -1,53 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import AppBar from './components/AppBar';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
-import Button from '@mui/material/Button';
 
 function App() {
-  const [user, setUser] = useState(null); // Tracks the user's authentication state
-  const [initialCheckDone, setInitialCheckDone] = useState(false); // Indicates initial auth check completion
+  const [user, setUser] = useState(null);
+  const [signUpCompleted, setSignUpCompleted] = useState(false);
 
   useEffect(() => {
     const auth = getAuth();
-    // Listen for authentication state changes
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log("Current user:", currentUser); // Log current user
       setUser(currentUser);
-      setInitialCheckDone(true); // Mark initial check as done after receiving the current user status
+      // Check if the user is logged in and the sign-up is completed
+      if (currentUser && !signUpCompleted) {
+        setSignUpCompleted(true);
+      }
     });
-    // Cleanup subscription on unmount
     return () => unsubscribe();
-  }, []);
+  }, [signUpCompleted]); // Add signUpCompleted as a dependency
 
-  const handleSignOut = () => {
-    const auth = getAuth();
-    signOut(auth).then(() => {
-      console.log("User signed out successfully");
-    }).catch((error) => {
-      console.error("Error signing out:", error);
-    });
+  const onSignUpSuccess = () => {
+    console.log("Sign up successful!"); // Log sign up success
+    setSignUpCompleted(true);
+    console.log("SignUp Completed:", signUpCompleted); // Log signUpCompleted value
   };
 
   return (
     <div>
-      <AppBar/>
-      {/* Show SignUp component only if it's a first-time visit (no user and initial check done) */}
-      {!user && initialCheckDone && <SignUp />}
-      {/* Show SignIn component only if there's no user logged in (consider adding additional control if needed) */}
+      <AppBar />
+      {/* Render SignUp component only if the user is not logged in and the sign-up is not completed */}
+      {!user && !signUpCompleted && <SignUp onSignUpSuccess={onSignUpSuccess} />}
+      {/* Render SignIn component only if the user is not logged in */}
       {!user && <SignIn />}
-      {user && (
-        <div>
-          <p>Welcome, {user.email}</p>
-          <Button variant="contained" color="secondary" onClick={handleSignOut}>
-            Sign Out
-          </Button>
-        </div>
-      )}
     </div>
   );
 }

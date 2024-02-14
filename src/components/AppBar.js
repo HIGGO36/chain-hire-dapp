@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,11 +14,30 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
 export default function MenuAppBar() {
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [auth, setAuth] = useState(false); // Initially set to false
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [hideSwitch, setHideSwitch] = useState(false); // Initially set to false
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setAuth(true); // If user is authenticated, set auth state to true
+        setHideSwitch(true); // Hide the switch after successful sign-in
+      } else {
+        setAuth(false); // If user is not authenticated, set auth state to false
+        setHideSwitch(false); // Show the switch if the user is not authenticated
+      }
+    });
+    return unsubscribe;
+  }, []);
 
   const handleChange = (event) => {
-    setAuth(event.target.checked);
+    setAuth(event.target.checked); // Update auth state based on switch change
+    if (!event.target.checked) {
+      const auth = getAuth();
+      signOut(auth); // Sign out if the switch is turned off
+    }
   };
 
   const handleMenu = (event) => {
@@ -30,18 +50,6 @@ export default function MenuAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? 'Logout' : 'Login'}
-        />
-      </FormGroup>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -87,6 +95,22 @@ export default function MenuAppBar() {
                 <MenuItem onClick={handleClose}>My account</MenuItem>
               </Menu>
             </div>
+          )}
+          {auth && (
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={auth}
+                    onChange={handleChange}
+                    aria-label="login switch"
+                    className="MuiSwitch-root MuiSwitch-sizeMedium css-julti5-MuiSwitch-root"
+                    style={{ display: hideSwitch ? 'none' : 'inline-flex' }} // Conditionally hide the switch based on hideSwitch state
+                  />
+                }
+                label={auth ? 'Logout' : 'Login'}
+              />
+            </FormGroup>
           )}
         </Toolbar>
       </AppBar>
