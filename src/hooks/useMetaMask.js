@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 const useMetaMask = () => {
+
     const [account, setAccount] = useState(null);
 
     // Function to manually connect to MetaMask
@@ -15,6 +16,12 @@ const useMetaMask = () => {
         } catch (error) {
             console.error("Error connecting to MetaMask:", error);
         }
+  };
+  
+   // Function to "disconnect" the wallet, which for the UI's purpose will just reload the page
+    const disconnectWallet = () => {
+        // Simply reload the page to reset the application state
+        window.location.reload();
     };
 
     // Handle accounts changing
@@ -41,7 +48,7 @@ const useMetaMask = () => {
         };
     }, []);
 
-    return { account, connectWallet };
+  return { account, connectWallet, disconnectWallet };
 };
 
 export default useMetaMask;
