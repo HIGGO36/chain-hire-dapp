@@ -6,7 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { MetaMaskProvider } from './contexts/MetaMaskContext'; // Make sure the path is correct
+import { MetaMaskProvider } from './contexts/MetaMaskContext'; 
 import './config/firebaseConfig';
 
 const theme = createTheme({

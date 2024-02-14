@@ -24,9 +24,8 @@ export default function SignUp({ onSignUpSuccess }) {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       setAlertInfo({ message: 'Account successfully created!', severity: 'success' });
-      console.log("Sign up successful!"); // Log sign up success
-      // Call the onSignUpSuccess prop function to notify App.js of successful sign-up
-      onSignUpSuccess();
+      console.log("Sign up successful!");
+      onSignUpSuccess(); // Call onSignUpSuccess when sign-up is successful
     } catch (error) {
       console.error("Error signing up:", error);
       setAlertInfo({ message: error.message, severity: 'error' });

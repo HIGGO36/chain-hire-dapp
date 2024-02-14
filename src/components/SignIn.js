@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import useMetaMask from '../hooks/useMetaMask';
+import MetaMaskWallet from './MetaMaskWallet'; // Import MetaMaskWallet component for MetaMask interactions
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,7 +17,6 @@ import Alert from '@mui/material/Alert';
 
 const defaultTheme = createTheme();
 
-// Define the Copyright component here
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -33,7 +32,6 @@ function Copyright(props) {
 
 export default function SignIn() {
   const [error, setError] = React.useState('');
-  const { connectWallet } = useMetaMask();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -103,9 +101,8 @@ export default function SignIn() {
               Sign In
             </Button>
           </Box>
-          <Button variant="contained" color="primary" onClick={connectWallet} sx={{ mt: 3 }}>
-            Connect MetaMask Wallet
-          </Button>
+          {/* Use MetaMaskWallet component for MetaMask interaction */}
+          <MetaMaskWallet />
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
