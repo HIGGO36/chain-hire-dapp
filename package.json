@@ -2,17 +2,13 @@
   "name": "chain-hire-dapp",
   "version": "1.0.0",
   "description": "A monorepo for the Chain Hire DApp including both client and server codebases.",
-    "dependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.14.5"
-    },
+  "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.14.5",
+    "express": "^4.17.1"
+  },
   "scripts": {
     "start": "node server/index.js",
-    "dev:start": "npm run start --prefix server & npm run start --prefix client",
-    "install:client": "npm install --prefix client",
-    "install:server": "npm install --prefix server",
-    "build:client": "npm run build --prefix client",
-    "build:server": "npm run build --prefix server",
-    "heroku-postbuild": "npm run install:client && npm run build:client"
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [
     "blockchain",
@@ -26,4 +22,3 @@
     "npm": "6.x"
   }
 }
-
