@@ -1,16 +1,17 @@
 const express = require('express');
 const dns = require('dns');
-const cors = require('cors'); // Import CORS module
+const cors = require('cors');
+const rateLimiting = require('./middleware/rateLimiting');
 const app = express();
 const port = process.env.PORT || 3001;
 
 app.use(express.json());
-app.use(cors()); // Enable CORS for all routes
+app.use(cors());
+app.use(rateLimiting); // Apply rate limiting to all routes
 
 // List of common free email providers for preliminary check
 const freeEmailProviders = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com'];
 
-// Handle GET requests to the root URL "/"
 app.get('/', (req, res) => {
     res.send('Welcome to the Email Verification Service');
 });
