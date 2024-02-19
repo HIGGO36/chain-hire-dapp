@@ -2,6 +2,9 @@
   "name": "chain-hire-dapp",
   "version": "1.0.0",
   "description": "A monorepo for the Chain Hire DApp including both client and server codebases.",
+    "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.14.5"
+    },
   "scripts": {
     "start": "node server/index.js",
     "dev:start": "npm run start --prefix server & npm run start --prefix client",
