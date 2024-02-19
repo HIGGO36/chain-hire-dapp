@@ -1,0 +1,26 @@
+{
+  "name": "chain-hire-dapp",
+  "version": "1.0.0",
+  "description": "A monorepo for the Chain Hire DApp including both client and server codebases.",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev:start": "npm run start --prefix server & npm run start --prefix client",
+    "install:client": "npm install --prefix client",
+    "install:server": "npm install --prefix server",
+    "build:client": "npm run build --prefix client",
+    "build:server": "npm run build --prefix server",
+    "heroku-postbuild": "npm run install:client && npm run build:client"
+  },
+  "keywords": [
+    "blockchain",
+    "dapp",
+    "employment"
+  ],
+  "author": "John D. Higgins",
+  "license": "ISC",
+  "engines": {
+    "node": "14.x",
+    "npm": "6.x"
+  }
+}
+
