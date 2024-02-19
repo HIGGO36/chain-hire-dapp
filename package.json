@@ -1,32 +1,41 @@
 {
   "name": "chain-hire-dapp",
-  "version": "1.0.0",
-  "description": "A monorepo for the Chain Hire DApp including both client and server codebases.",
-  "main": "server/index.js",
-  "scripts": {
-    "start": "node server/index.js",
-    "heroku-postbuild": "npm install && npm run build --prefix client"
-  },
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.14.5",
-    "cors": "^2.8.5",
-    "dns": "^0.2.2",
-    "express": "^4.18.2",
-    "express-rate-limit": "^7.1.5",
-    "nodemailer": "^6.9.9"
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.8",
+    "@mui/icons-material": "^5.15.9",
+    "@mui/material": "^5.15.10",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "ethers": "^5.0.0",
+    "firebase": "^10.8.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "refresh": "rm -rf build node_modules yarn.lock && yarn install"
+  },
+  "eslintConfig": {
+    "extends": ["react-app", "react-app/jest"]
+  },
+  "browserslist": {
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
   },
   "devDependencies": {
-    "nodemon": "^3.0.3"
-  },
-  "engines": {
-    "node": "14.x",
-    "npm": "6.x"
-  },
-  "keywords": [
-    "blockchain",
-    "dapp",
-    "employment"
-  ],
-  "author": "John D. Higgins",
-  "license": "ISC"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "hardhat": "^2.19.5"
+  }
 }
