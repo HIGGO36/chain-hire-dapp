@@ -1,4 +1,4 @@
-// useFirestore.js
+// users/auth/firestore/useFirestore.js
 import { db } from '../firebase/firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
 
