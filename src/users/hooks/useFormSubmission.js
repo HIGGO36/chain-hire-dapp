@@ -1,25 +1,28 @@
+// src/users/hooks/useFormSubmission.js
 import { useState } from 'react';
 import { validateEmail, validatePhone } from '../utils/validationUtils';
 import { verifyBusinessEmail } from '../utils/verifyBusinessEmail';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { addUserDocument } from '../access/firestore/useFirestore';
 
-const useFormSubmission = () => {
+const useFormSubmission = (navigate) => {
     const [alertInfo, setAlertInfo] = useState({ message: '', severity: '' });
     const auth = getAuth();
 
     const handleSubmit = async (userData, userType) => {
         let errorMessage = [];
 
+        // Validate email
         if (!validateEmail(userData.email)) {
             errorMessage.push('Invalid email address.');
         }
 
+        // Validate phone number format for non-Job Seekers
         if (userType !== 'Job Seeker' && !validatePhone(userData.businessPhone)) {
             errorMessage.push('Invalid phone number format.');
         }
 
-        // Attempt to verify business email if necessary and add any errors to the errorMessage array
+        // Attempt to verify business email for Employer or Recruiter
         if ((userType === 'Employer' || userType === 'Recruiter') && userData.businessEmail) {
             try {
                 const verificationResult = await verifyBusinessEmail(userData.businessEmail);
@@ -37,6 +40,7 @@ const useFormSubmission = () => {
             return;
         }
 
+        // Proceed with Firebase Auth user creation
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
             const { uid } = userCredential.user;
@@ -45,11 +49,14 @@ const useFormSubmission = () => {
             const firestoreUserData = { ...userData, uid };
             delete firestoreUserData.password;
 
-            // Add user document to Firestore
+            // Add user document to Firestore based on userType
             await addUserDocument(userType, firestoreUserData);
 
+            // Set success message and redirect to SignIn component
             setAlertInfo({ message: 'Signup successful!', severity: 'success' });
+            navigate('/signin');
         } catch (error) {
+            // Handle Firebase Auth errors
             let message = 'Signup failed. Please try again.';
             switch (error.code) {
                 case 'auth/email-already-in-use':
@@ -59,7 +66,7 @@ const useFormSubmission = () => {
                     message = 'Password is too weak.';
                     break;
                 default:
-                    console.log(`Unexpected error code: ${error.code}`);
+                    console.error(`Unexpected error code: ${error.code}`);
                     break;
             }
             setAlertInfo({ message, severity: 'error' });

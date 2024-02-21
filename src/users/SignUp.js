@@ -1,4 +1,6 @@
+// src/users/SignUp.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useFormSubmission from './hooks/useFormSubmission';
 import SignUpForm from './components/SignUpForm';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -9,8 +11,8 @@ import Box from '@mui/material/Box';
 const DefaultTheme = createTheme();
 
 export default function SignUp() {
-  const [userType, setUserType] = useState('Job Seeker');
-  const [userData, setUserData] = useState({
+    const [userType, setUserType] = useState('Job Seeker');
+    const [userData, setUserData] = useState({
     email: '',
     password: '',
     companyName: '',
@@ -22,28 +24,29 @@ export default function SignUp() {
     businessPhone: '',
   });
 
-  const { handleSubmit, alertInfo } = useFormSubmission();
+  const navigate = useNavigate();
+    const { handleSubmit, alertInfo } = useFormSubmission(navigate); // Pass navigate function to the hook
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setUserData({ ...userData, [name]: value });
-  };
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setUserData({ ...userData, [name]: value });
+    };
 
-  return (
-    <ThemeProvider theme={DefaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <SignUpForm 
-            userType={userType} 
-            setUserType={setUserType} 
-            userData={userData} 
-            handleChange={handleChange} 
-            handleSubmit={handleSubmit} 
-            alertInfo={alertInfo} 
-          />
-        </Box>
-      </Container>
-    </ThemeProvider>
-  );
+    return (
+        <ThemeProvider theme={DefaultTheme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <SignUpForm 
+                        userType={userType} 
+                        setUserType={setUserType} 
+                        userData={userData} 
+                        handleChange={handleChange} 
+                        handleSubmit={handleSubmit} // Pass handleSubmit directly
+                        alertInfo={alertInfo} 
+                    />
+                </Box>
+            </Container>
+        </ThemeProvider>
+    );
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { AppBar, Box, Button, Container, Drawer, IconButton, MenuItem, Toolbar, Typography, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleColorMode from './ToggleColorMode';
@@ -9,6 +9,7 @@ function TopMenu({ mode, toggleColorMode }) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const navigate = useNavigate();
+  const location = useLocation(); // Add this line
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -54,10 +55,9 @@ function TopMenu({ mode, toggleColorMode }) {
           {/* Toggle and Sign In/Up Buttons */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
-            <Button variant="outlined" onClick={() => navigate('/signin')}>Sign In</Button>
-            <Button variant="contained" onClick={() => navigate('/signup')}>Sign Up</Button>
+            {location.pathname !== '/signin' && <Button variant="outlined" onClick={() => navigate('/signin')}>Sign In</Button>}
+            {location.pathname !== '/signup' && <Button variant="contained" onClick={() => navigate('/signup')}>Sign Up</Button>}
           </Box>
-
 
           {/* Mobile Menu Icon */}
           <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ ml: 2, display: { sm: 'none' } }} onClick={toggleDrawer(true)}>
