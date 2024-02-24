@@ -1,24 +1,26 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './users/hooks/useFirebaseAuth';
 import Home from './templates/frontend/Home';
 import UsersSignIn from './users/UsersSignIn';
 import UserSignUp from './users/UserSignUp';
-import Dashboard from './users/profile/Dashboard';
+import JobSeekerDashboard from './users/profile/JobSeekerDashboard';
+import EmployerDashboard from './users/profile/EmployerDashboard';
+import RecruiterDashboard from './users/profile/RecruiterDashboard';
 
 function App() {
   return (
-    <AuthProvider> {/* Wrap the Router with AuthProvider */}
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signin" element={<UsersSignIn />} />
-          <Route path="/signup" element={<UserSignUp />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          {/* Add other routes as needed */}
-        </Routes>
-      </Router>
-    </AuthProvider>
+    // If need a context/provider for user state, use it here. 
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signin" element={<UsersSignIn />} />
+        <Route path="/signup" element={<UserSignUp />} />
+        <Route path="/jobseekerdashboard" element={<JobSeekerDashboard />} />
+        <Route path="/employerdashboard" element={<EmployerDashboard />} />
+        <Route path="/recruiterdashboard" element={<RecruiterDashboard />} />
+        {/* Add other routes as needed */}
+      </Routes>
+    </Router>
   );
 }
 

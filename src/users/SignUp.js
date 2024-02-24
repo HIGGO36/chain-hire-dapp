@@ -13,20 +13,19 @@ const DefaultTheme = createTheme();
 export default function SignUp() {
     const [userType, setUserType] = useState('Job Seeker');
     const [userData, setUserData] = useState({
-    email: '',
-    password: '',
-    companyName: '',
-    firstName: '',
-    lastName: '',
-    employeeID: '',
-    positionTitle: '',
-    businessEmail: '',
-    businessPhone: '',
-  });
+        email: '',
+        password: '',
+        companyName: '',
+        firstName: '',
+        lastName: '',
+        employeeID: '',
+        positionTitle: '',
+        businessEmail: '',
+        businessPhone: '',
+    });
 
-  const navigate = useNavigate();
-    const { handleSubmit, alertInfo } = useFormSubmission(navigate); // Pass navigate function to the hook
-
+    const navigate = useNavigate();
+    const { handleSubmit, alertInfo } = useFormSubmission(navigate); 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setUserData({ ...userData, [name]: value });
@@ -42,8 +41,8 @@ export default function SignUp() {
                         setUserType={setUserType} 
                         userData={userData} 
                         handleChange={handleChange} 
-                        handleSubmit={handleSubmit} // Pass handleSubmit directly
-                        alertInfo={alertInfo} 
+                        handleSubmit={() => handleSubmit(userData, userType)} // Updated to pass userData and userType
+                        alertInfo={alertInfo}
                     />
                 </Box>
             </Container>

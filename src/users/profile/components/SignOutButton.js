@@ -2,16 +2,25 @@
 import React from 'react';
 import { IconButton } from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import { useNavigate } from 'react-router-dom'; 
-import { useAuth } from '../../hooks/useFirebaseAuth';
+import { useNavigate } from 'react-router-dom';
 
 const SignOutButton = () => {
   const navigate = useNavigate();
-  const { signOut } = useAuth();
 
   const handleSignOut = async () => {
-    await signOut();
-    navigate('/signin');
+    try {
+      
+      // Make an API call to the server to handle sign-out
+      await fetch('http://localhost:3001/api/users/signout', {
+        method: 'POST', // Assuming you're using a POST request for sign-out
+        // Include credentials if your endpoint requires authentication
+        credentials: 'include', 
+      });
+      // Navigate to sign-in page upon successful sign-out
+      navigate('/signin');
+    } catch (error) {
+      console.error('Sign-out error:', error);
+    }
   };
 
   return (
