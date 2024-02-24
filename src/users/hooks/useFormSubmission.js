@@ -23,7 +23,8 @@ const useFormSubmission = (navigate) => {
 
         // Send data to the server for processing
         try {
-            const response = await fetch('http://localhost:3001/api/users/signup', {
+            // const response = await fetch('http://localhost:3001/api/users/signup', {
+              const response = await fetch('/api/users/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ...userData, userType }),

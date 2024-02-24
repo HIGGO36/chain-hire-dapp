@@ -9,9 +9,10 @@ const SignOutButton = () => {
 
   const handleSignOut = async () => {
     try {
-      
+
       // Make an API call to the server to handle sign-out
-      await fetch('http://localhost:3001/api/users/signout', {
+      // await fetch('http://localhost:3001/api/users/signout', {
+             await fetch('/api/users/signout', {
         method: 'POST', // Assuming you're using a POST request for sign-out
         // Include credentials if your endpoint requires authentication
         credentials: 'include', 
