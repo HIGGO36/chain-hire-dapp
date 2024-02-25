@@ -6,34 +6,35 @@ const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode }) => {
     const [userData, setUserData] = useState({});
   
     useEffect(() => {
-        const fetchUserData = async () => {
-            const auth = getAuth();
-            const user = auth.currentUser;
+        const auth = getAuth();
+        auth.onAuthStateChanged(user => {
             if (user) {
-                const idToken = await user.getIdToken();
-                try {
-                    const response = await fetch('http://localhost:3001/api/users/profile', {
+                user.getIdToken().then(idToken => {
+                    fetch('http://localhost:3001/api/users/profile', {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${idToken}`,
                             'Content-Type': 'application/json',
                         },
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Could not fetch user data');
+                        return response.json();
+                    })
+                    .then(data => {
+                        setUserData(data || {});
+                    })
+                    .catch(error => {
+                        console.error('Error fetching user data:', error);
+                        alert('Error fetching user data. Please try again later.');
                     });
-
-                    if (!response.ok) {
-                        throw new Error('Could not fetch user data');
-                    }
-
-                    const data = await response.json();
-                    setUserData(data || {});
-                } catch (error) {
-                    console.error('Error fetching user data:', error);
-                    alert('Error fetching user data. Please try again later.');
-                }
+                });
+            } else {
+                // Handle user not signed in or session expired
+                console.log("User not signed in or session expired");
+                setUserData({});
             }
-        };
-
-        fetchUserData();
+        });
     }, []);
 
     const handleChange = (e) => {
@@ -41,20 +42,21 @@ const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode }) => {
         setUserData(prevData => ({ ...prevData, [name]: value }));
     };
 
-const handlePasswordReset = () => {
-    const auth = getAuth();
-    const emailAddress = auth.currentUser.email;
+    const handlePasswordReset = () => {
+        const auth = getAuth();
+        if(auth.currentUser) {
+            const emailAddress = auth.currentUser.email;
+            sendPasswordResetEmail(auth, emailAddress).then(() => {
+                alert('Password reset email sent successfully.');
+            }).catch((error) => {
+                console.error("Error sending password reset email:", error);
+                alert('Failed to send password reset email. Please try again later.');
+            });
+        }
+    };
 
-    sendPasswordResetEmail(auth, emailAddress).then(() => {
-        alert('Password reset email sent successfully.');
-    }).catch((error) => {
-        console.error("Error sending password reset email:", error);
-        alert('Failed to send password reset email. Please try again later.');
-    });
-};
-
-    // Fields to exclude from rendering
-    const excludedFields = ['userType'];
+    // Fields to exclude from rendering, now including "businessEmail"
+    const excludedFields = ['userType', 'businessEmail'];
 
     return (
         <Paper elevation={3} sx={{ p: 3, mb: 4, borderRadius: 2, boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', borderColor: 'darkgreen' }}>
