@@ -1,4 +1,3 @@
-// src/users/SignIn.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AlertMessage from './components/AlertMessage';
@@ -6,6 +5,8 @@ import TextInputField from './components/TextInputField';
 import { Avatar, Box, Button, CssBaseline, Container, Typography, Grid } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import app from '../users/access/firebase/firebaseConfig'; 
 
 const DefaultTheme = createTheme();
 
@@ -15,23 +16,30 @@ function SignIn() {
     const [alertInfo, setAlertInfo] = useState({ message: '', severity: '' });
     const navigate = useNavigate();
 
+    const auth = getAuth(app);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            // const response = await fetch('http://localhost:3001/api/users/signin', {
-             const response = await fetch('/api/users/signin', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const token = await userCredential.user.getIdToken();
+
+            // Send the token to your server
+            const response = await fetch('http://localhost:3001/api/users/verifyToken', {
+            //  const response = await fetch(' https://young-ravine-47125-71f43e0f6395.herokuapp.com/api/users/verifyToken', {
+           
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idToken: token }),
+            credentials: 'include',
             });
+
+
             const result = await response.json();
 
             if (result.success) {
-
-           const formattedUserType = result.userType.replace(/\s+/g, '').toLowerCase();
-           navigate(`/${formattedUserType}dashboard`);
-
-                // navigate(`/${result.userType.toLowerCase()}dashboard`);
+                const formattedUserType = result.userType.replace(/\s+/g, '').toLowerCase();
+                navigate(`/${formattedUserType}dashboard`);
             } else {
                 setAlertInfo({ message: result.message || "Sign-in failed. Please try again.", severity: "error" });
             }
