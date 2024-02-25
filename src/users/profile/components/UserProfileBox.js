@@ -53,8 +53,7 @@ const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode }) => {
                 setUserData({});
             }
         });
-    // }, []);
-    }, [setEditMode]); 
+    }, [setEditMode]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -74,7 +73,11 @@ const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode }) => {
         }
     };
 
-    const excludedFields = ['userType', 'businessEmail'];
+    // Determine excluded fields based on userType
+    let excludedFields = ['userType', 'businessEmail'];
+    if (userData.userType === 'Job Seeker') {
+        excludedFields = Object.keys(userData).filter(key => key !== 'email');
+    }
 
     return (
         <>
@@ -107,11 +110,10 @@ const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode }) => {
                             <Button variant="outlined" color="warning" onClick={handlePasswordReset}>Reset Password</Button>
                         </Box>
                     </Box>
-                </Fade>
-            </Modal>
-        </>
-    );
-
+</Fade>
+</Modal>
+</>
+);
 };
 
 export default UserProfileBox;
