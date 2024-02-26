@@ -1,14 +1,13 @@
 // src/users/profile/RecruiterDashboard.js
 import React, { useState, useEffect } from 'react';
-import { CssBaseline, Box, Container, Grid, ThemeProvider, createTheme, Paper } from '@mui/material';
+import { getAuth } from "firebase/auth"; 
+import { CssBaseline, Box, Container, ThemeProvider, createTheme } from '@mui/material';
 import { DashboardAppBar } from './components/DashboardAppBar';
 import { DashboardDrawer } from './components/DashboardDrawer';
-import Chart from '../components/Chart';
-import Deposits from '../components/Deposits';
-import Orders from '../components/Orders';
-import Copyright from '../components/Copyright';
+import DashboardPaper from './components/DashboardPaper';
 import UserProfileBox from './components/UserProfileBox';
-import { getAuth } from "firebase/auth";
+import OvalPortal from './components/OvalPortal';
+import Copyright from '../components/Copyright';
 
 const defaultTheme = createTheme();
 
@@ -83,40 +82,37 @@ export default function Dashboard() {
     setEditMode(false);
   };
 
+      // Define inline styles for UserProfileBox
+  const userProfileBoxStyle = {
+    display: 'flex',
+    flexDirection: 'row', 
+    minWidth: '100%', 
+  };
+
   return (
-    <ThemeProvider theme={defaultTheme}>
+         <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <DashboardAppBar open={open} handleDrawerOpen={toggleDrawerOpen} />
         <DashboardDrawer open={open} handleDrawerClose={toggleDrawerClose} />
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
-            backgroundColor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
-          }}
-        >
+        <Box component="main" sx={{ flexGrow: 1, height: '100vh', overflow: 'auto',
+            backgroundColor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],}} >
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Paper elevation={3} sx={{ p: 3, minHeight: 'calc(100vh - 64px - 48px)', borderRadius: 2 }}>
-              <Grid container spacing={3}>
-                <UserProfileBox
-                  userData={userData}
-                  onSave={handleSave}
-                  onCancel={handleCancel}
-                  editMode={editMode}
-                  setEditMode={setEditMode}
-                />
-                <Grid item xs={12} md={8} lg={9}><Chart /></Grid>
-                <Grid item xs={12} md={4} lg={3}><Deposits /></Grid>
-<Grid item xs={12}><Orders /></Grid>
-</Grid>
-<Copyright sx={{ pt: 4 }} />
-</Paper>
-</Container>
-</Box>
-</Box>
-</ThemeProvider>
+            {/* Use DashboardPaper component */}
+            <DashboardPaper>
+              <OvalPortal portalStyle={{ display: 'flex', justifyContent: 'center', marginTop: '20px', minHeight: '420px' }} />
+              <UserProfileBox
+                userData={userData}
+                onSave={handleSave}
+                onCancel={handleCancel}
+                editMode={editMode}
+                setEditMode={setEditMode}
+                style={userProfileBoxStyle}/>
+              <Copyright sx={{ pt: 4 }} />
+            </DashboardPaper>
+          </Container>
+        </Box>
+      </Box>
+    </ThemeProvider>
 );
 }

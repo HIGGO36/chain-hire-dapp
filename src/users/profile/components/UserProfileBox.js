@@ -2,24 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { Box, Button, TextField, Typography, Modal, Backdrop, Fade } from '@mui/material';
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
-// Enhanced custom styles for the UserProfileBox and its contents
 const modalStyle = {
     position: 'absolute',
-    top: '50%',
-    left: '50%',
+    top: '51%',
+    left: '53.5%',
     transform: 'translate(-50%, -50%)',
-    width: 'auto',
-    maxWidth: '80%', // Allows the modal to be responsive to screen size
-    bgcolor: 'background.paper', // Use a theme color that contrasts well with the text
-    border: '2px solid #000', // More visible border
-    boxShadow: 24, // Use Material-UI's shadow for consistency
-    p: 4,
-    borderRadius: 3, // Smoothed corners
-    overflow: 'auto', // Ensures content is scrollable if it overflows
-    maxHeight: '80vh', // Prevents the modal from being too tall
+    width: '84%',
+    maxWidth: '100%',
+    backgroundColor: 'black', 
+    color: 'white', 
+    border: '10px solid white', 
+    borderRadius: '20%', 
+    boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)', 
+    overflow: 'hidden', // Hide scrollbar
 };
 
-const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode }) => {
+const userProfileButtonStyle = {
+    margin: '4px 1.9%',
+    minWidth: '96%',
+    color: 'black', 
+    backgroundColor: '#96FD8D', 
+    borderRadius: '50%', 
+    padding: '10px', 
+    marginBottom: '20px', 
+    fontWeight: '600',
+};
+
+const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode}) => {
     const [userData, setUserData] = useState({});
     const [openModal, setOpenModal] = useState(false);
 
@@ -41,7 +50,7 @@ const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode }) => {
                     })
                     .then(data => {
                         setUserData(data || {});
-                        setEditMode(false); // Ensure fields are not editable until "Edit" is clicked
+                        setEditMode(false);
                     })
                     .catch(error => {
                         console.error('Error fetching user data:', error);
@@ -55,8 +64,21 @@ const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode }) => {
         });
     }, [setEditMode]);
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\(\d{3}\)-\d{3}-\d{4}$/;
+
     const handleChange = (e) => {
         const { name, value } = e.target;
+        // Check for email format
+        if (name === 'email' && !emailRegex.test(value)) {
+            alert('Invalid email format. Please use a valid email address.');
+            return;
+        }
+        // Check for phone format
+        if (name === 'telephone' && !phoneRegex.test(value)) {
+            alert('Invalid telephone number format. Please use the format (XXX)-XXX-XXXX.');
+            return;
+        }
         setUserData(prevData => ({ ...prevData, [name]: value }));
     };
 
@@ -81,7 +103,7 @@ const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode }) => {
 
     return (
         <>
-            <Button variant="outlined" onClick={() => { setOpenModal(true); setEditMode(true); }}>Edit Profile</Button>
+            <Button sx={userProfileButtonStyle} variant="outlined" onClick={() => { setOpenModal(true); setEditMode(true); }}>Edit Profile</Button>
             <Modal
                 open={openModal}
                 onClose={() => { setOpenModal(false); setEditMode(false); }}
@@ -92,28 +114,31 @@ const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode }) => {
                 <Fade in={openModal}>
                     <Box sx={modalStyle}>
                         <Typography variant="h6" gutterBottom>User Profile</Typography>
-                        {Object.entries(userData).filter(([key]) => !excludedFields.includes(key)).map(([key, value]) => (
-                            <TextField
-                                key={key}
-                                label={key.charAt(0).toUpperCase() + key.slice(1)}
-                                name={key}
-                                value={value || ''}
-                                onChange={handleChange}
-                                margin="normal"
-                                fullWidth
-                                disabled={!editMode}
-                            />
-                        ))}
+                        <Box sx={{ maxHeight: '60vh', overflowY: 'auto' }}> {/* Added container for scrollability */}
+                            {Object.entries(userData).filter(([key]) => !excludedFields.includes(key)).map(([key, value]) => (
+                                <Box key={key} sx={{ display: 'flex', flexDirection: 'column', mb: 2 }}>
+                                    <Typography variant="subtitle1" sx={{ color: 'yellow' }}>{key.charAt(0).toUpperCase() + key.slice(1)}</Typography>
+                                    <TextField
+                                        value={value || ''}
+                                        name={key}
+                                        onChange={handleChange}
+                                        disabled={!editMode}
+                                        variant="outlined"
+                                        sx={{ backgroundColor: '#f0f0f0', mt: 1 }} // Changed background color to light grey
+                                    />
+                                </Box>
+                            ))}
+                        </Box>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
                             <Button variant="contained" color="primary" onClick={() => { onSave(userData); setOpenModal(false); setEditMode(false); }}>Save</Button>
-                            <Button variant="outlined" color="secondary" onClick={() => { setOpenModal(false); setEditMode(false); }}>Cancel</Button>
+                            <Button variant="outlined" color="secondary" onClick={()=> { setOpenModal(false); setEditMode(false); }}>Cancel</Button>
                             <Button variant="outlined" color="warning" onClick={handlePasswordReset}>Reset Password</Button>
                         </Box>
                     </Box>
-</Fade>
-</Modal>
-</>
-);
+                </Fade>
+            </Modal>
+        </>
+    );
 };
 
 export default UserProfileBox;
