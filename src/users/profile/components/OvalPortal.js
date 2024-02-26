@@ -1,14 +1,16 @@
 import React from 'react';
-import { Paper, Button } from '@mui/material';
+import { Button } from '@mui/material';
 
-const OvalPortal = ({ portalStyle }) => {
+const OvalPortal = () => {
   const ovalStyle = {
     position: 'relative',
-    width: '98%', // Adjusted width to take up about 90% of the screen width
-    maxWidth: '800px', // Optional: Set a maximum width for the oval
+    margin: '0px auto',
+    width: '99%', 
+    maxWidth: '800px', 
+    height: '550px',
     backgroundColor: 'black',
     border: '10px solid white',
-    borderRadius: '20%', // Modified borderRadius for less circular shape
+    borderRadius: '20%', 
     boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)',
   };
 
@@ -29,18 +31,7 @@ const OvalPortal = ({ portalStyle }) => {
     padding: '10px',
   };
 
-  const closeButtonStyle = {
-    position: 'absolute',
-    top: '0',
-    right: '0',
-    backgroundColor: 'yellow',
-    color: 'black',
-    borderRadius: '50%',
-    padding: '10px',
-  };
-
   return (
-    <Paper elevation={3} sx={portalStyle}>
       <div style={ovalStyle}>
         <div style={buttonContainerStyle}>
           <Button style={buttonStyle}>Options</Button>
@@ -49,9 +40,7 @@ const OvalPortal = ({ portalStyle }) => {
           <Button style={buttonStyle}>LIST</Button>
           <Button style={buttonStyle}>BURN</Button>
         </div>
-        <Button style={closeButtonStyle}>Close</Button>
       </div>
-    </Paper>
   );
 };
 
