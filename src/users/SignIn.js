@@ -7,6 +7,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import app from '../users/access/firebase/firebaseConfig'; 
+import CircularProgress from '@mui/material/CircularProgress';
 
 const DefaultTheme = createTheme();
 
@@ -14,12 +15,14 @@ function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [alertInfo, setAlertInfo] = useState({ message: '', severity: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false); // Define isSubmitting state
     const navigate = useNavigate();
 
     const auth = getAuth(app);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setIsSubmitting(true); // Set isSubmitting to true when form submission starts
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const token = await userCredential.user.getIdToken();
@@ -46,6 +49,8 @@ function SignIn() {
         } catch (error) {
             console.error("Sign-in error:", error);
             setAlertInfo({ message: "Network or server error during sign-in.", severity: "error" });
+        } finally {
+            setIsSubmitting(false); // Set isSubmitting to false after form submission completes
         }
     };
 
@@ -69,7 +74,11 @@ function SignIn() {
                             </Grid>
                         </Grid>
                         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                            Sign In
+                            {isSubmitting ? (
+                                <CircularProgress size={24} color="inherit" /> // Render loading spinner if isSubmitting is true
+                            ) : (
+                                'Sign In'
+                            )}
                         </Button>
                     </Box>
                 </Box>

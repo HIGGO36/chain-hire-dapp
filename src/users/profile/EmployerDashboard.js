@@ -8,6 +8,7 @@ import DashboardPaper from './components/DashboardPaper';
 import UserProfileBox from './components/UserProfileBox';
 import OvalPortal from './components/OvalPortal';
 import Copyright from '../components/Copyright';
+import ScrollingBar from './components/ScrollingBar'; 
 
 const defaultTheme = createTheme();
 
@@ -96,6 +97,7 @@ export default function Dashboard() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             {/* Use DashboardPaper component */}
             <DashboardPaper>
+              <ScrollingBar userData={userData} /> {/* Add the ScrollingBar component here */}
               <OvalPortal portalStyle={{ display: 'flex', justifyContent: 'center', marginTop: '20px', minHeight: '420px' }} />
               <UserProfileBox
                 userData={userData}

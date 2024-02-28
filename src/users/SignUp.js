@@ -1,4 +1,3 @@
-// src/users/SignUp.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFormSubmission from './hooks/useFormSubmission';
@@ -7,6 +6,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const DefaultTheme = createTheme();
 
@@ -25,7 +25,8 @@ export default function SignUp() {
     });
 
     const navigate = useNavigate();
-    const { handleSubmit, alertInfo } = useFormSubmission(navigate); 
+    const { handleSubmit, alertInfo, isSubmitting } = useFormSubmission(navigate); // Destructure isSubmitting from useFormSubmission
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setUserData({ ...userData, [name]: value });
@@ -36,14 +37,18 @@ export default function SignUp() {
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <SignUpForm 
-                        userType={userType} 
-                        setUserType={setUserType} 
-                        userData={userData} 
-                        handleChange={handleChange} 
-                        handleSubmit={() => handleSubmit(userData, userType)} // Updated to pass userData and userType
-                        alertInfo={alertInfo}
-                    />
+                    {isSubmitting ? ( // Render loading spinner if isSubmitting is true
+                        <CircularProgress />
+                    ) : (
+                        <SignUpForm 
+                            userType={userType} 
+                            setUserType={setUserType} 
+                            userData={userData} 
+                            handleChange={handleChange} 
+                            handleSubmit={() => handleSubmit(userData, userType)} // Updated to pass userData and userType
+                            alertInfo={alertInfo}
+                        />
+                    )}
                 </Box>
             </Container>
         </ThemeProvider>

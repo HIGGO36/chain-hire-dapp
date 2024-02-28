@@ -16,7 +16,7 @@ const modalStyle = {
     border: '10px solid white', 
     borderRadius: '20%', 
     boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)', 
-    overflow: 'hidden', // Hide scrollbar
+    overflow: 'hidden',
 };
 
 const userProfileButtonStyle = {
@@ -30,7 +30,7 @@ const userProfileButtonStyle = {
     fontWeight: '600',
 };
 
-const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode}) => {
+const UserProfileBox = ({ userId, onSave, onCancel, editMode, setEditMode }) => {
     const [userData, setUserData] = useState({});
     const [openModal, setOpenModal] = useState(false);
 
@@ -64,7 +64,7 @@ const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode}) => {
                 setUserData({});
             }
         });
-    }, [setEditMode]);
+    }, [userId, setEditMode]);
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^\(\d{3}\)-\d{3}-\d{4}$/;
@@ -106,6 +106,7 @@ const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode}) => {
     return (
         <>
             <Button sx={userProfileButtonStyle} variant="outlined" onClick={() => { setOpenModal(true); setEditMode(true); }}>Edit Profile</Button>
+ 
             <Modal
                 open={openModal}
                 onClose={() => { setOpenModal(false); setEditMode(false); }}
@@ -119,7 +120,7 @@ const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode}) => {
                         <Box sx={{ maxHeight: '60vh', overflowY: 'auto' }}> {/* Added container for scrollability */}
                             {Object.entries(userData).filter(([key]) => !excludedFields.includes(key)).map(([key, value]) => (
                                 <Box key={key} sx={{ display: 'flex', flexDirection: 'column', mb: 2 }}>
-                                    <Typography variant="subtitle1" sx={{ color: 'yellow' }}>{key.charAt(0).toUpperCase() + key.slice(1)}</Typography>
+                                    <Typography variant="subtitle1" sx={{ color: 'yellow' }}>{key.charAt(0).toUpperCase()                                        + key.slice(1)}</Typography>
                                     <TextField
                                         value={value || ''}
                                         name={key}
@@ -144,3 +145,4 @@ const UserProfileBox = ({ onSave, onCancel, editMode, setEditMode}) => {
 };
 
 export default UserProfileBox;
+
