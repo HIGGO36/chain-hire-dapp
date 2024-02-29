@@ -15,7 +15,7 @@ function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [alertInfo, setAlertInfo] = useState({ message: '', severity: '' });
-    const [isSubmitting, setIsSubmitting] = useState(false); // Define isSubmitting state
+    const [isSubmitting, setIsSubmitting] = useState(false); 
     const navigate = useNavigate();
 
     const auth = getAuth(app);

@@ -1,8 +1,8 @@
-// src/users/profile/OvalPortal.js
+// src/users/profile/components/MetaMaskConnectButton.js
 import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 
-const MetaMaskConnectButton = ({ userId, onConnect, className }) => {
+const MetaMaskConnectButton = ({ onConnect, className }) => {
     const [connectedAccount, setConnectedAccount] = useState(null);
 
     useEffect(() => {
@@ -21,7 +21,7 @@ const MetaMaskConnectButton = ({ userId, onConnect, className }) => {
         };
 
         checkConnection();
-    }, [userId]);
+    }, []);
 
     const handleConnect = async () => {
         try {
