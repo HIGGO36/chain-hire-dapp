@@ -5,10 +5,10 @@ import { CssBaseline, Box, Container, ThemeProvider, createTheme } from '@mui/ma
 import { DashboardAppBar } from './components/DashboardAppBar';
 import { DashboardDrawer } from './components/DashboardDrawer';
 import DashboardPaper from './components/DashboardPaper';
-import UserProfileBox from './components/UserProfileBox';
-import OvalPortal from './components/OvalPortal';
 import Copyright from '../components/Copyright';
 import ScrollingBar from './components/ScrollingBar'; 
+import UserProfileBox from './components/UserProfileBox';
+import EmployerPortal from './components/EmployerPortal';
 
 const defaultTheme = createTheme();
 
@@ -74,6 +74,7 @@ export default function Dashboard() {
     }
   };
 
+
   const handleCancel = () => {
     setUserData(originalData);
     setEditMode(false);
@@ -98,7 +99,7 @@ export default function Dashboard() {
             {/* Use DashboardPaper component */}
             <DashboardPaper>
               <ScrollingBar userData={userData} /> {/* Add the ScrollingBar component here */}
-              <OvalPortal portalStyle={{ display: 'flex', justifyContent: 'center', marginTop: '20px', minHeight: '420px' }} />
+              <EmployerPortal portalStyle={{ display: 'flex', justifyContent: 'center', marginTop: '20px', minHeight: '420px' }} />
               <UserProfileBox
                 userData={userData}
                 onSave={handleSave}

@@ -1,20 +1,59 @@
-import React from 'react';
+// /src/users/profile/components/JobSeekerPortal.js
+import React, { useState } from 'react';
+import { Button } from '@mui/material';
+import MetaMaskConnectButton from './MetaMaskConnectButton';
+import MintJobRoleNFTButton from '../../utils/MintJobRoleNFTButton';
 
-const JobSeekerPortal = () => {
-  return (
-    <div className="relative w-3/5 mx-auto mt-20">
-      {/* Oval shape */}
-      <div className="absolute top-0 left-0 right-0 bottom-0 bg-black rounded-full border-10 border-white">
-        {/* Buttons */}
-        <div className="absolute top-1/2 left-0 transform -translate-y-1/2">
-          <button className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 py-2 bg-yellow-400 text-black rounded-full">Button 1</button>
-          <button className="absolute left-full transform translate-x-1/2 px-4 py-2 bg-yellow-400 text-black rounded-full">Button 2</button>
-          <button className="absolute right-full transform translate-x-1/2 px-4 py-2 bg-yellow-400 text-black rounded-full">Button 3</button>
-          <button className="absolute right-1/2 transform translate-x-1/2 translate-y-1/2 px-4 py-2 bg-yellow-400 text-black rounded-full">Button 4</button>
-          <button className="absolute left-0 top-full transform -translate-y-1/2 px-4 py-2 bg-yellow-400 text-black rounded-full">Button 5</button>
-        </div>
-        {/* Upper right corner button */}
-        <button className="absolute top-0 right-0 px-4 py-2 bg-yellow-400 text-black rounded-full">X</button>
+const JobSeekerPortal = ({ onConnect }) => {
+  const [userAddress, setUserAddress] = useState(null);// State to hold the user's Ethereum address
+  const userId = "exampleUserId";
+
+  const ovalStyle = {
+    position: 'relative',
+    margin: '0px auto',
+    width: '99%',
+    maxWidth: '800px',
+    height: '550px',
+    backgroundColor: 'black',
+    border: '10px solid white',
+    borderRadius: '10%',
+    boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)',
+  };
+
+  const buttonContainerStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '0',
+    transform: 'translateY(-50%)',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
+  };
+
+  const buttonStyle = {
+    backgroundColor: 'yellow',
+    color: 'black',
+    borderRadius: '50%',
+    padding: '16px',
+    margin: '4px 4px 0px 4px',
+  };
+
+// Callback function to handle the connection and receive the user's Ethereum address
+  const handleConnect = (account) => {
+    console.log(`Connected to MetaMask with account: ${account}`);
+    setUserAddress(account); // Update the state with the connected user's address
+    onConnect(account); // Pass the user's Ethereum address to the parent component
+  };
+  
+ return (
+    <div style={ovalStyle}>
+      <div style={buttonContainerStyle}>
+        <MetaMaskConnectButton userId={userId} onConnect={handleConnect} />
+        {/* Pass the userAddress state to the MintJobRoleNFTButton */}
+        <MintJobRoleNFTButton userAddress={userAddress} />
+        <Button style={buttonStyle}>Options</Button>
+
+        <Button style={buttonStyle}>BURN</Button>
       </div>
     </div>
   );

@@ -104,45 +104,44 @@ const UserProfileBox = ({ userId, onSave, onCancel, editMode, setEditMode }) => 
     }
 
     return (
-        <>
-            <Button sx={userProfileButtonStyle} variant="outlined" onClick={() => { setOpenModal(true); setEditMode(true); }}>Edit Profile</Button>
- 
+            <>
+            <Button sx={userProfileButtonStyle} variant="outlined" onClick={() => { setOpenModal(true); setEditMode(true); }}>
+            Edit Profile</Button>
             <Modal
-                open={openModal}
-                onClose={() => { setOpenModal(false); setEditMode(false); }}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{ timeout: 500 }}
-            >
-                <Fade in={openModal}>
-                    <Box sx={modalStyle}>
-                        <Typography variant="h6" gutterBottom>User Profile</Typography>
-                        <Box sx={{ maxHeight: '60vh', overflowY: 'auto' }}> {/* Added container for scrollability */}
-                            {Object.entries(userData).filter(([key]) => !excludedFields.includes(key)).map(([key, value]) => (
-                                <Box key={key} sx={{ display: 'flex', flexDirection: 'column', mb: 2 }}>
-                                    <Typography variant="subtitle1" sx={{ color: 'yellow' }}>{key.charAt(0).toUpperCase()                                        + key.slice(1)}</Typography>
-                                    <TextField
-                                        value={value || ''}
-                                        name={key}
-                                        onChange={handleChange}
-                                        disabled={!editMode}
-                                        variant="outlined"
-                                        sx={{ backgroundColor: '#f0f0f0', mt: 1 }} // Changed background color to light grey
-                                    />
-                                </Box>
-                            ))}
-                        </Box>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-                            <Button variant="contained" color="primary" onClick={() => { onSave(userData); setOpenModal(false); setEditMode(false); }}>Save</Button>
-                            <Button variant="outlined" color="secondary" onClick={()=> { setOpenModal(false); setEditMode(false); }}>Cancel</Button>
-                            <Button variant="outlined" color="warning" onClick={handlePasswordReset}>Reset Password</Button>
-                        </Box>
-                    </Box>
-                </Fade>
+            open={openModal}
+            onClose={() => { setOpenModal(false); setEditMode(false); }}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{ timeout: 500 }}>
+            <Fade in={openModal}>
+            <Box sx={modalStyle}>
+            <Typography variant="h6" gutterBottom>User Profile</Typography>
+            <Box sx={{ maxHeight: '60vh', overflowY: 'auto' }}> {/* Added container for scrollability */}
+            {Object.entries(userData).filter(([key]) => !excludedFields.includes(key)).map(([key, value]) => (
+            <Box key={key} sx={{ display: 'flex', flexDirection: 'column', mb: 2 }}>
+            <Typography variant="subtitle1" sx={{ color: 'yellow' }}>{key.charAt(0).toUpperCase()                                        + key.slice(1)}</Typography>
+            <TextField
+            value={value || ''}
+            name={key}
+            onChange={handleChange}
+            disabled={!editMode}
+            variant="outlined"
+            sx={{ backgroundColor: '#f0f0f0', mt: 1 }} 
+            />
+            </Box>
+            ))}
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+            <Button variant="contained" color="primary" onClick={() => { onSave(userData); setOpenModal(false); setEditMode(false); }}>Save</Button>
+            <Button variant="outlined" color="secondary" onClick={()=> { setOpenModal(false); setEditMode(false); }}>Cancel</Button>
+            <Button variant="outlined" color="warning" onClick={handlePasswordReset}>Reset Password</Button>
+            </Box>
+            </Box>
+            </Fade>
             </Modal>
-        </>
-    );
-};
+            </>
+            );
+            };
 
 export default UserProfileBox;
 

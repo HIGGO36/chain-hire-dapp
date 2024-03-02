@@ -6,7 +6,7 @@ import { DashboardAppBar } from './components/DashboardAppBar';
 import { DashboardDrawer } from './components/DashboardDrawer';
 import DashboardPaper from './components/DashboardPaper';
 import UserProfileBox from './components/UserProfileBox';
-import OvalPortal from './components/OvalPortal';
+import RecruiterPortal from './components/RecruiterPortal';
 import Copyright from '../components/Copyright';
 import ScrollingBar from './components/ScrollingBar'; 
 
@@ -102,7 +102,8 @@ export default function Dashboard() {
             {/* Use DashboardPaper component */}
             <DashboardPaper>
               <ScrollingBar userData={userData} /> {/* Add the ScrollingBar component here */}
-              <OvalPortal portalStyle={{ display: 'flex', justifyContent: 'center', marginTop: '20px', minHeight: '420px' }} />
+                 {/* <OvalPortal onConnect={handleConnect} userType={userType} portalStyle={{ display: 'flex', justifyContent: 'center', marginTop: '20px', minHeight: '420px' }} /> */}
+              <RecruiterPortal portalStyle={{ display: 'flex', justifyContent: 'center', marginTop: '20px', minHeight: '420px' }} />
               <UserProfileBox
                 userData={userData}
                 onSave={handleSave}
