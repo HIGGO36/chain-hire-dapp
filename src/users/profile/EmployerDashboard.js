@@ -13,6 +13,7 @@ import EmployerPortal from './components/EmployerPortal';
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
+
   const [open, setOpen] = useState(true);
   const [userData, setUserData] = useState({});
   const [originalData, setOriginalData] = useState({});
@@ -22,6 +23,7 @@ export default function Dashboard() {
   const toggleDrawerClose = () => setOpen(false);
 
   useEffect(() => {
+    
     const fetchUserProfile = async () => {
       const auth = getAuth();
       const user = auth.currentUser;

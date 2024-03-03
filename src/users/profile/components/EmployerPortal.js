@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+// Import necessary modules
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import MetaMaskConnectButton from './MetaMaskConnectButton';
 import MintJobRoleNFTButton from '../../utils/MintJobRoleNFTButton';
 
 const EmployerPortal = () => {
   const [userAddress, setUserAddress] = useState('');
+  const [latestTokenId, setLatestTokenId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Check for stored address in local storage on component mount
     const storedAddress = localStorage.getItem('userAddress');
     if (storedAddress) {
       setUserAddress(storedAddress);
@@ -15,55 +18,32 @@ const EmployerPortal = () => {
   }, []);
 
   const handleConnect = (account) => {
-    console.log(`Connected to MetaMask with account: ${account}`);
-    // Update the state with the connected user's address
     setUserAddress(account);
-    // Store the connected user's address in local storage
     localStorage.setItem('userAddress', account);
   };
 
-  const ovalStyle = {
-    position: 'relative',
-    margin: '0px auto',
-    width: '99%',
-    maxWidth: '800px',
-    height: '550px',
-    backgroundColor: 'black',
-    border: '10px solid white',
-    borderRadius: '10%',
-    boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)',
+  const navigateToWallet = () => {
+    navigate('/JobRoleNFTWallet');
   };
 
-  const buttonContainerStyle = {
-    position: 'absolute',
-    top: '270px',
-    left: '90px',
-    transform: 'translate(-50%, -50%)',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px',
-  };
-
-  const buttonStyle = {
-    backgroundColor: 'yellow',
-    color: 'black',
-    borderRadius: '50%',
-    padding: '16px',
-    margin: '4px',
+  const handleTokenMinted = (tokenId) => {
+    setLatestTokenId(tokenId);
   };
 
   return (
-    <div style={ovalStyle}>
-      <div style={buttonContainerStyle}>
+    <div style={{ position: 'relative', margin: '0 auto', width: '99%', maxWidth: '800px', height: '550px', backgroundColor: 'black', border: '10px solid white', borderRadius: '10%', boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)' }}>
+      <div style={{ position: 'absolute', top: '270px', left: '90px', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', gap: '20px' }}>
         <MetaMaskConnectButton onConnect={handleConnect} />
-        <Button style={buttonStyle}>Options</Button>
-        {/* Render buttons if userAddress is set */}
+        <Button style={{ backgroundColor: 'yellow', color: 'black', borderRadius: '50%', padding: '16px', margin: '4px' }}>Options</Button>
         {userAddress && (
           <>
-            <MintJobRoleNFTButton style={buttonStyle} userAddress={userAddress} />
-            <Button style={buttonStyle}>SELL</Button>
-            <Button style={buttonStyle}>LIST</Button>
-            <Button style={buttonStyle}>BURN</Button>
+            <MintJobRoleNFTButton style={{ backgroundColor: 'yellow', color: 'black', borderRadius: '50%', padding: '16px', margin: '4px' }} userAddress={userAddress} onTokenMinted={handleTokenMinted} />
+            <Button style={{ backgroundColor: 'yellow', color: 'black', borderRadius: '50%', padding: '16px', margin: '4px' }}>SELL</Button>
+            <Button style={{ backgroundColor: 'yellow', color: 'black', borderRadius: '50%', padding: '16px', margin: '4px' }}>LIST</Button>
+            <Button style={{ backgroundColor: 'yellow', color: 'black', borderRadius: '50%', padding: '16px', margin: '4px' }}>BURN</Button>
+            <Button style={{ backgroundColor: 'yellow', color: 'black', borderRadius: '50%', padding: '16px', margin: '4px' }} onClick={navigateToWallet}>Collections</Button>
+            {/* Render the latest token ID */}
+            <div style={{ color: 'white' }}>Latest Token ID: {latestTokenId}</div>
           </>
         )}
       </div>
