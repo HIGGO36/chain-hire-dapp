@@ -38,8 +38,6 @@ const MetaMaskConnectButton = ({ onConnect, className }) => {
         }
     };
 
-    
-
     // Function to truncate and format the wallet address
     const formatAddress = (address) => 
         `${address.slice(0, 6)}...${address.slice(-4)}`;
@@ -54,7 +52,7 @@ const MetaMaskConnectButton = ({ onConnect, className }) => {
                 fontWeight: connectedAccount ? 'bold' : 'normal',
                 position: 'fixed',
                 top: '-60px',
-                left: '10px',
+                left: '8px',
                 borderRadius: '27px 27px 27px 0px',
                 width: '140px',
                 overflow: 'hidden',

@@ -1,4 +1,3 @@
-// Import necessary modules
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
@@ -31,19 +30,19 @@ const EmployerPortal = () => {
   };
 
   return (
-    <div style={{ position: 'relative', margin: '0 auto', width: '99%', maxWidth: '800px', height: '550px', backgroundColor: 'black', border: '10px solid white', borderRadius: '10%', boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)' }}>
-      <div style={{ position: 'absolute', top: '270px', left: '90px', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        <MetaMaskConnectButton onConnect={handleConnect} />
-        <Button style={{ backgroundColor: 'yellow', color: 'black', borderRadius: '50%', padding: '16px', margin: '4px' }}>Options</Button>
+    <div style={{ position: 'relative', margin: '0 auto', width: '99%', maxWidth: '800px', height: '550px', backgroundColor: '#20336B', border: '10px solid #0E1D47', borderRadius: '10%', boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)', color: '#D4E774' }}>
+      <div style={{ position: 'absolute', top: '230px', left: '90px', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <MetaMaskConnectButton style={{ fontSize: '14px', color: '#D4E774'}} onConnect={handleConnect} />
+        <Button style={{ marginTop: '29px', fontSize: '20px', color: '#D4E774', textAlign: 'left' }}>Options</Button>
         {userAddress && (
-          <>
-            <MintJobRoleNFTButton style={{ backgroundColor: 'yellow', color: 'black', borderRadius: '50%', padding: '16px', margin: '4px' }} userAddress={userAddress} onTokenMinted={handleTokenMinted} />
-            <Button style={{ backgroundColor: 'yellow', color: 'black', borderRadius: '50%', padding: '16px', margin: '4px' }}>SELL</Button>
-            <Button style={{ backgroundColor: 'yellow', color: 'black', borderRadius: '50%', padding: '16px', margin: '4px' }}>LIST</Button>
-            <Button style={{ backgroundColor: 'yellow', color: 'black', borderRadius: '50%', padding: '16px', margin: '4px' }}>BURN</Button>
-            <Button style={{ backgroundColor: 'yellow', color: 'black', borderRadius: '50%', padding: '16px', margin: '4px' }} onClick={navigateToWallet}>Collections</Button>
-            {/* Render the latest token ID */}
-            <div style={{ color: 'white' }}>Latest Token ID: {latestTokenId}</div>
+             <>
+            <MintJobRoleNFTButton userAddress={userAddress} onTokenMinted={handleTokenMinted} />
+            <Button style={{ fontSize: '20px', color: '#D4E774', textAlign: 'left' }} onClick={navigateToWallet}>Collections</Button>
+            <Button style={{ fontSize: '20px', color: '#D4E774', textAlign: 'left' }}>BURN</Button>
+            <div>
+              {/* Render the latest token ID */}
+              <div style={{ color: 'white', margin: '0 0 0 12px', position: 'absolute', top: '384px', fontSize: '18px' }}>Latest Token ID: {latestTokenId}</div>
+            </div>
           </>
         )}
       </div>

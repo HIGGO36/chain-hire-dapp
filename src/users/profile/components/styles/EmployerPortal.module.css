@@ -1,0 +1,28 @@
+.button-styling {
+    background-color: tan;
+    border: 3px white ridge;
+    border-radius: 50%;
+    padding: 16px;
+    margin: 4px;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.button-styling:hover {
+    background-color: lightgoldenrodyellow;
+    color: black;
+}
+
+.button-styling:focus {
+    background-color: lightcoral;
+    color: black;
+}
+
+.button-styling:active {
+    background-color: lightgreen;
+    color: black;
+}
+
+.lighten-background {
+    filter: brightness(90%);
+}

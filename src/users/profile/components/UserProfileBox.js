@@ -14,18 +14,21 @@ const modalStyle = {
     backgroundColor: 'black', 
     color: 'white', 
     border: '10px solid white', 
-    borderRadius: '20%', 
+    borderRadius: '10px', 
     boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)', 
     overflow: 'hidden',
 };
 
 const userProfileButtonStyle = {
-    margin: '4px 1.9%',
-    minWidth: '96%',
+    display: 'block',
+    margin: '10px auto',
+    minWidth: '60%',
     color: 'black', 
-    backgroundColor: '#96FD8D', 
-    borderRadius: '50%', 
-    padding: '10px', 
+    fontSize: '14px',
+    backgroundColor: '#6467F0', 
+    borderr: '5px solid #515A5C',
+    borderRadius: '5px', 
+    padding: '15px', 
     marginBottom: '20px', 
     fontWeight: '600',
 };

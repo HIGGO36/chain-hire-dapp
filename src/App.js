@@ -6,6 +6,8 @@ import UserSignUp from './users/UserSignUp';
 import JobSeekerDashboard from './users/profile/JobSeekerDashboard';
 import EmployerDashboard from './users/profile/EmployerDashboard';
 import RecruiterDashboard from './users/profile/RecruiterDashboard';
+import JobRoleNFTWallet from './users/profile/JobRoleNFTWallet';
+
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
         <Route path="/jobseekerdashboard" element={<JobSeekerDashboard />} />
         <Route path="/employerdashboard" element={<EmployerDashboard />} />
         <Route path="/recruiterdashboard" element={<RecruiterDashboard />} />
+        <Route path="/JobRoleNFTWallet" element={<JobRoleNFTWallet />} />
         {/* Add other routes as needed */}
       </Routes>
     </Router>

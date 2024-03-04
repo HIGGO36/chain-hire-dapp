@@ -4,6 +4,7 @@ import MintJobRoleNFTForm from './MintJobRoleNFTForm';
 
 const MintJobRoleNFTButton = ({ userAddress, onTokenMinted }) => {
   const [open, setOpen] = useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -13,8 +14,8 @@ const MintJobRoleNFTButton = ({ userAddress, onTokenMinted }) => {
         Mint Job Role NFT
       </Button>
       <Modal open={open} onClose={handleClose}>
-        <Box style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
-          {/* Pass onTokenMinted as a prop to MintJobRoleNFTForm */}
+        <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
+          {/* Pass required props to MintJobRoleNFTForm */}
           <MintJobRoleNFTForm userAddress={userAddress} onClose={handleClose} onTokenMinted={onTokenMinted} />
         </Box>
       </Modal>
