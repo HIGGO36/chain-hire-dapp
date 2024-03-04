@@ -64,19 +64,46 @@ const JobRoleNFTWallet = () => {
   }, []);
 
   return (
-    <Box sx={{ flexGrow: 1, p: 3, color: 'black', minHeight: '100vh' }}>
+    <Box sx={{ flexGrow: 1, p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh' }}>
       <MetaMaskConnectButton onConnect={handleAccountConnect} />
-      <Typography variant="h4" gutterBottom style={{ color: 'black', marginTop: '20px' }}>
+      <Typography variant="h4" gutterBottom sx={{ color: 'darkblue', marginTop: '20px', fontFamily: 'Roboto' }}>
         Your JobRoleNFTs
       </Typography>
       {isLoading ? (
-        <Typography style={{ textAlign: 'center', color: 'black' }}>Loading NFTs...</Typography>
+        <Typography sx={{ textAlign: 'center', color: 'darkblue' }}>Loading NFTs...</Typography>
       ) : nfts.length > 0 ? (
-        <Grid container spacing={2}>
+        <Grid container spacing={4} justifyContent="center">
         {nfts.map((nft, index) => (
         <Grid item xs={12} sm={6} md={4} key={index}>
-        <Card variant="outlined" sx={{ padding: '20px', bgcolor: 'rgba(255, 255, 255, 0.8)', color: 'black' }}>
-        <CardContent>
+        <Card variant="outlined" sx={{
+        padding: '20px',
+        bgcolor: '#f5f5f5', 
+        color: 'darkblue',
+        fontFamily: 'Roboto',
+        boxShadow: '5px 5px 15px rgba(0,0,0,0.2)', 
+        border: '5px solid transparent',
+        backgroundImage: `
+        linear-gradient(#f5f5f5, #f5f5f5), 
+        linear-gradient(to right, darkblue, #f5f5dc)`, 
+        backgroundOrigin: 'border-box',
+        backgroundClip: 'content-box, border-box',
+        '&:hover, &:focus': {
+        opacity: 0.8,
+        },
+        position: 'relative',
+        overflow: 'hidden',
+        '&::before': { 
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        backgroundImage: 'url("path/to/your/crumpled-paper-texture.png")',
+        opacity: 0.5, 
+        },
+        }}>
+        <CardContent sx={{ position: 'relative', zIndex: 1 }}>
         {/* Displaying the NFT data */}
         <Typography variant="h5">Token ID: {nft.tokenId}</Typography>
         <Typography variant="subtitle1">Company: {nft.companyName}</Typography>
@@ -97,10 +124,10 @@ const JobRoleNFTWallet = () => {
         ))}
         </Grid>
         ) : (
-        <Typography style={{ color: 'white', marginTop: '20px', textAlign: 'center' }}>No NFTs found or wallet not connected.</Typography>
+        <Typography sx={{ color: 'white', marginTop: '20px', textAlign: 'center' }}>No NFTs found or wallet not connected.</Typography>
         )}
         </Box>
-        );
-        };
+  );
+};
 
-        export default JobRoleNFTWallet;
+export default JobRoleNFTWallet;

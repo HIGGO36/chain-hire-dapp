@@ -32,7 +32,8 @@ const EmployerPortal = () => {
   return (
     <div style={{ position: 'relative', margin: '0 auto', width: '99%', maxWidth: '800px', height: '550px', backgroundColor: '#20336B', border: '10px solid #0E1D47', borderRadius: '10%', boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)', color: '#D4E774' }}>
       <div style={{ position: 'absolute', top: '230px', left: '90px', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        <MetaMaskConnectButton style={{ fontSize: '14px', color: '#D4E774'}} onConnect={handleConnect} />
+        <MetaMaskConnectButton style={{ position: 'fixed', top: '-60px', left: '8px', fontSize: '14px', color: '#D4E774' }} onConnect={handleConnect} />
+        
         <Button style={{ marginTop: '29px', fontSize: '20px', color: '#D4E774', textAlign: 'left' }}>Options</Button>
         {userAddress && (
              <>
