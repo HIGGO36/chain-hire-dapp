@@ -47,6 +47,6 @@ const DrawerStyled = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== '
     <Divider />
     <List sx={{background: '#5779A7', color: '#E5E7EA'}}>{mainListItems}</List>
     <Divider />
-    <List sx={{background: '#747D8B', color: '#E5E7EA'}}>{secondaryListItems}</List>
+    <List sx={{background: '#747D8B', color: '#E5E7EA', height: '100%'}}>{secondaryListItems}</List>
     </DrawerStyled>
     );

@@ -4,7 +4,6 @@ import { getAuth } from "firebase/auth";
 import { CssBaseline, Box, Container, ThemeProvider, createTheme } from '@mui/material';
 import { DashboardAppBar } from './components/DashboardAppBar';
 import { DashboardDrawer } from './components/DashboardDrawer';
-import DashboardPaper from './components/DashboardPaper';
 import Copyright from '../components/Copyright';
 import ScrollingBar from './components/ScrollingBar'; 
 import UserProfileBox from './components/UserProfileBox';
@@ -94,11 +93,10 @@ export default function Dashboard() {
   <CssBaseline />
   <DashboardAppBar open={open} handleDrawerOpen={toggleDrawerOpen} />
   <DashboardDrawer open={open} handleDrawerClose={toggleDrawerClose} />
-  <Box component="main" sx={{ flexGrow: 1, height: '100vh', overflow: 'auto',
-  backgroundColor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],}} >
+  <Box component="main" sx={{ flexGrow: 1, height: '100vh', overflow: 'auto', margin: '50px 0px 20px 0px', background: 'linear-gradient(to right, #9FA8AC, #FFFFFF)'}} >
   <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
   {/* Use DashboardPaper component */}
-  <DashboardPaper>
+
   <ScrollingBar userData={userData} /> {/* Add the ScrollingBar component here */}
   <EmployerPortal portalStyle={{ display: 'flex', justifyContent: 'center', marginTop: '20px', minHeight: '420px' }} />
   <UserProfileBox
@@ -109,7 +107,7 @@ export default function Dashboard() {
   setEditMode={setEditMode}
   style={userProfileBoxStyle}/>
   <Copyright sx={{ pt: 4 }} />
-  </DashboardPaper>
+
   </Container>
   </Box>
   </Box>

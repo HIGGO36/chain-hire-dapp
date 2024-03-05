@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Button, TextField, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import React, { useState} from 'react';
+import { Box, Button,  CircularProgress, TextField, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { ethers } from 'ethers';
 import JobRoleNFTv4ABI from './abis/JobRoleNFTv4ABI.json';
 
@@ -20,6 +20,9 @@ const validCountries = [
 ];
 
 const MintJobRoleNFTForm = ({ userAddress, onClose, onTokenMinted }) => {
+
+  const [isLoading, setIsLoading] = useState(false);
+  
   const [formState, setFormState] = useState({
     companyName: '',
     industry: '',
@@ -75,6 +78,8 @@ const MintJobRoleNFTForm = ({ userAddress, onClose, onTokenMinted }) => {
       return;
     }
 
+     setIsLoading(true); 
+
     try {
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -108,14 +113,18 @@ const MintJobRoleNFTForm = ({ userAddress, onClose, onTokenMinted }) => {
     } catch (error) {
       console.error('Error minting NFT:', error);
       alert('Error minting NFT. See console for details.');
+    }finally {
+      setIsLoading(false); // Stop loading regardless of outcome
     }
   };
 
+  
   return (
     <Box sx={{
+      zIndex: '1000',
       position: 'absolute',
       top: '50%',
-      left: '50%',
+      left: '276px',
       transform: 'translate(-50%, -50%)',
       display: 'flex',
       flexDirection: 'column',
@@ -123,44 +132,44 @@ const MintJobRoleNFTForm = ({ userAddress, onClose, onTokenMinted }) => {
       border: '5px solid',
       borderColor: 'linear-gradient(180deg, rgba(105,105,105,1) 0%, rgba(0,0,0,1) 100%)',
       borderRadius: '20px',
-      width: '80%',
-      maxWidth: '600px',
-      maxHeight: '90vh',
+      width: '100%',
+      maxHeight: '86vh',
       overflowY: 'auto',
       padding: 3,
       background: 'linear-gradient(145deg, #ffd700, #ffffff)',
       boxShadow: 'inset 5px 5px 10px #c8c8c8, inset -5px -5px 10px #ffffff',
     }}>
-      <Typography variant="h6" sx={{ color: 'black', textAlign: 'center' }}>Mint Your Job Role NFT</Typography>
-      <TextField label="Company Name" name="companyName" value={formState.companyName} onChange={handleChange} fullWidth required />
-      <FormControl fullWidth error={errors.industry !== ''}>
-        <InputLabel>Industry</InputLabel>
-        <Select name="industry" value={formState.industry} onChange={handleChange} required>
-          {validIndustries.map((industry, index) => (
-            <MenuItem key={index} value={industry}>{industry}</MenuItem>
-          ))}
-        </Select>
-        {errors.industry && <Typography variant="body2" color="error">{errors.industry}</Typography>}
-      </FormControl>
-      <TextField label="Job Role Title" name="jobRoleTitle" value={formState.jobRoleTitle} onChange={handleChange} fullWidth required />
-      <TextField label="Min Salary (ETH)" name="minSalary" value={formState.minSalary} onChange={handleChange} fullWidth required />
-      <TextField label="Max Salary (ETH)" name="maxSalary" value={formState.maxSalary} onChange={handleChange} fullWidth required />
-      <FormControl fullWidth>
-        <InputLabel>Work Location Type</InputLabel>
-        <Select name="workLocationType" value={formState.workLocationType} onChange={handleChange} required>
-          <MenuItem value="Remote">Remote</MenuItem>
-          <MenuItem value="Local">Local</MenuItem>
-          <MenuItem value="Hybrid">Hybrid</MenuItem>
-        </Select>
+      
+  <Typography variant="h6" sx={{ color: 'black', textAlign: 'center' }}>Mint Job Role NFT</Typography>
+  <TextField label="Company Name" name="companyName" value={formState.companyName} onChange={handleChange} fullWidth required />
+  <FormControl fullWidth error={errors.industry !== ''}>
+  <InputLabel>Industry</InputLabel>
+  <Select name="industry" value={formState.industry} onChange={handleChange} required>
+  {validIndustries.map((industry, index) => (
+  <MenuItem key={index} value={industry}>{industry}</MenuItem>
+  ))}
+  </Select>
+  {errors.industry && <Typography variant="body2" color="error">{errors.industry}</Typography>}
+  </FormControl>
+  <TextField label="Job Role Title" name="jobRoleTitle" value={formState.jobRoleTitle} onChange={handleChange} fullWidth required />
+  <TextField label="Min Salary (ETH)" name="minSalary" value={formState.minSalary} onChange={handleChange} fullWidth required />
+  <TextField label="Max Salary (ETH)" name="maxSalary" value={formState.maxSalary} onChange={handleChange} fullWidth required />
+  <FormControl fullWidth>
+  <InputLabel>Work Location Type</InputLabel>
+  <Select name="workLocationType" value={formState.workLocationType} onChange={handleChange} required>
+  <MenuItem value="Remote">Remote</MenuItem>
+  <MenuItem value="Local">Local</MenuItem>
+  <MenuItem value="Hybrid">Hybrid</MenuItem>
+  </Select>
   </FormControl>
   <FormControl fullWidth error={errors.country !== ''}>
-    <InputLabel>Country</InputLabel>
-    <Select name="country" value={formState.country} onChange={handleChange} required>
-      {validCountries.map((country, index) => (
-        <MenuItem key={index} value={country}>{country}</MenuItem>
-      ))}
-    </Select>
-    {errors.country && <Typography variant="body2" color="error">{errors.country}</Typography>}
+  <InputLabel>Country</InputLabel>
+  <Select name="country" value={formState.country} onChange={handleChange} required>
+  {validCountries.map((country, index) => (
+  <MenuItem key={index} value={country}>{country}</MenuItem>
+  ))}
+  </Select>
+  {errors.country && <Typography variant="body2" color="error">{errors.country}</Typography>}
   </FormControl>
   <TextField label="Location" name="location" value={formState.location} onChange={handleChange} fullWidth required />
   <TextField label="Position Summary" name="positionSummary" value={formState.positionSummary} onChange={handleChange} fullWidth required />
@@ -169,19 +178,31 @@ const MintJobRoleNFTForm = ({ userAddress, onClose, onTokenMinted }) => {
   <TextField label="Life Span (days)" name="lifeSpan" type="number" value={formState.lifeSpan} onChange={handleChange} fullWidth required />
   {errors.lifeSpan && <Typography variant="body2" color="error">{errors.lifeSpan}</Typography>}
 
-  <Button onClick={mintNFT} disabled={!canMint} sx={{
+    <Button
+    onClick={mintNFT}
+    disabled={!canMint || isLoading}
+    sx={{
     mt: 2,
-    bgcolor: canMint ? 'green' : 'grey',
+    bgcolor: canMint && !isLoading ? 'green' : 'grey',
     color: 'white',
-    '&:hover': {
-      bgcolor: canMint ? 'darkgreen' : 'grey',
-    },
+    '&:hover': { bgcolor: canMint && !isLoading ? 'darkgreen' : 'grey' },
     borderRadius: '20px',
-  }}>
-    Mint NFT
-  </Button>
-</Box>
-);
-};
+    position: 'relative',
+    }}
+    >
+    {isLoading ? (
+    <CircularProgress size={24} sx={{
+    color: 'green',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: '-12px',
+    marginLeft: '-12px',
+    }} />
+    ) : 'Mint NFT'}
+    </Button>
+    </Box>
+    );
+    };
 
 export default MintJobRoleNFTForm;

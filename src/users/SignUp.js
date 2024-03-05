@@ -25,7 +25,7 @@ export default function SignUp() {
     });
 
     const navigate = useNavigate();
-    const { handleSubmit, alertInfo, isSubmitting } = useFormSubmission(navigate); // Destructure isSubmitting from useFormSubmission
+    const { handleSubmit, alertInfo, isSubmitting } = useFormSubmission(navigate);
 
     const handleChange = (event) => {
         const { name, value } = event.target;

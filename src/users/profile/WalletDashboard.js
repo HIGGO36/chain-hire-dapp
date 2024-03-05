@@ -5,7 +5,6 @@ import JobRoleNFTv4ABI from '../utils/abis/JobRoleNFTv4ABI.json';
 import MetaMaskConnectButton from './components/MetaMaskConnectButton';
 import { DashboardAppBar } from './components/DashboardAppBar';
 import { DashboardDrawer } from './components/DashboardDrawer';
-import DashboardPaper from './components/DashboardPaper';
 
 const defaultTheme = createTheme();
 
@@ -75,9 +74,9 @@ localStorage.setItem('userAddress', account);
         <Box sx={{ display: 'flex' }}>
   <DashboardAppBar open={open} handleDrawerOpen={toggleDrawerOpen} />
   <DashboardDrawer open={open} handleDrawerClose={toggleDrawerClose} />
-        <Box component="main" sx={{ flexGrow: 1, p: 3, minHeight: '100vh' }}>
+<Box component="main" sx={{ flexGrow: 1, p: 3, minHeight: '100vh', margin: '50px 0px 20px 0px', background: 'linear-gradient(to right, #9FA8AC, #FFFFFF)' }}>
+
         <Container maxWidth="lg">
-        <DashboardPaper>
         <MetaMaskConnectButton onConnect={handleAccountConnect} />
         <Typography variant="h4" gutterBottom sx={{ color: 'darkblue', marginTop: '20px', fontFamily: 'Roboto' }}>
         Your JobRoleNFTs
@@ -139,7 +138,6 @@ localStorage.setItem('userAddress', account);
         ) : (
         <Typography sx={{ color: 'white', marginTop: '20px', textAlign: 'center' }}>No NFTs found or wallet not connected.</Typography>
         )}
-        </DashboardPaper>
         </Container> </Box>
         </Box>
         </ThemeProvider>

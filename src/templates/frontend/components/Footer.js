@@ -12,7 +12,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" mt={1}>
       {'Copyright © '}
-      <Link href="https://mui.com/">Your Website</Link>
+      <Link href="https://mui.com/">Chain Hire</Link>
       {` ${new Date().getFullYear()}.`}
     </Typography>
   );
@@ -48,7 +48,7 @@ export default function Footer() {
         </IconButton>
       </Box>
       <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 2 }}>
-        {'Your Website © '}
+        {'Chain Hire © '}
         {new Date().getFullYear()}
         {'.'}
       </Typography>

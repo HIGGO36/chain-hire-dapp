@@ -4,11 +4,11 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const modalStyle = {
     position: 'absolute',
-    top: '51%',
-    left: '50.5%',
+    top: '55.1%',
+    left: '55%',
     transform: 'translate(-50%, -50%)',
-    width: '82%',
-    maxWidth: '100%',
+    width: '70%',
+    maxWidth: '806px',
     margin: '20px',
     padding: '26px',
     backgroundColor: 'black', 
