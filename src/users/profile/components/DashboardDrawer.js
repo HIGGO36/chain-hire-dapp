@@ -29,23 +29,24 @@ const DrawerStyled = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== '
   },
 }));
 
-export const DashboardDrawer = ({ open, handleDrawerClose }) => (
-  <DrawerStyled variant="permanent" open={open}>
+    export const DashboardDrawer = ({ open, handleDrawerClose }) => (
+    <DrawerStyled variant="permanent" open={open}>
     <Toolbar
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        px: [1],
-      }}
+    sx={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    backgroundColor: '#5779A7',
+    px: [1],
+    }}
     >
-      <IconButton onClick={handleDrawerClose}>
-        <ChevronLeftIcon />
-      </IconButton>
-    </Toolbar>
+    <IconButton onClick={handleDrawerClose}>
+    <ChevronLeftIcon />
+    </IconButton>
+    </Toolbar >
     <Divider />
-    <List>{mainListItems}</List>
+    <List sx={{background: '#5779A7', color: '#E5E7EA'}}>{mainListItems}</List>
     <Divider />
-    <List>{secondaryListItems}</List>
-  </DrawerStyled>
-);
+    <List sx={{background: '#747D8B', color: '#E5E7EA'}}>{secondaryListItems}</List>
+    </DrawerStyled>
+    );

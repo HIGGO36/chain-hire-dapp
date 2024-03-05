@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -7,8 +8,12 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import LayersIcon from '@mui/icons-material/Layers';
-import AssignmentIcon from '@mui/icons-material/Assignment';
+import WhatshotIcon from '@mui/icons-material/Whatshot'; // For "Burn"
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'; // For "List"
+import BuildCircleIcon from '@mui/icons-material/BuildCircle'; // For "Manage"
+import NotificationsIcon from '@mui/icons-material/Notifications'; // For "Notifications"
+import HelpIcon from '@mui/icons-material/Help'; // For "Request Help"
+import RateReviewIcon from '@mui/icons-material/RateReview'; // For "Reviews"
 
 export const mainListItems = (
   <React.Fragment>
@@ -36,21 +41,21 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Messages" />
     </ListItemButton>
-        <ListItemButton>
+    <ListItemButton>
       <ListItemIcon>
-        <LayersIcon />
+        <WhatshotIcon />
       </ListItemIcon>
       <ListItemText primary="Burn" />
     </ListItemButton>
-        <ListItemButton>
+    <ListItemButton>
       <ListItemIcon>
-        <LayersIcon />
+        <AddShoppingCartIcon />
       </ListItemIcon>
       <ListItemText primary="List" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <LayersIcon />
+        <BuildCircleIcon />
       </ListItemIcon>
       <ListItemText primary="Manage" />
     </ListItemButton>
@@ -58,27 +63,28 @@ export const mainListItems = (
 );
 
 export const secondaryListItems = (
-  <React.Fragment>
-    <ListSubheader component="div" inset>
+ <React.Fragment>
+    <ListSubheader component="div" inset  sx={{background: '#747D8B', fontSize: '16px', color: '#D0FF7F', fontWeight: '600'}}>
      Additional Services
     </ListSubheader>
     <ListItemButton>
       <ListItemIcon>
-        <AssignmentIcon />
+        <NotificationsIcon />
       </ListItemIcon>
       <ListItemText primary="Notifications" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <AssignmentIcon />
+        <HelpIcon />
       </ListItemIcon>
       <ListItemText primary="Request Help" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <AssignmentIcon />
+        <RateReviewIcon />
       </ListItemIcon>
       <ListItemText primary="Reviews" />
     </ListItemButton>
   </React.Fragment>
 );
+

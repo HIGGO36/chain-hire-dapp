@@ -22,7 +22,7 @@ const EmployerPortal = () => {
   };
 
   const navigateToWallet = () => {
-    navigate('/JobRoleNFTWallet');
+    navigate('/WalletDashboard');
   };
 
   const handleTokenMinted = (tokenId) => {

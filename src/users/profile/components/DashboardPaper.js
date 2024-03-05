@@ -7,7 +7,7 @@ const DashboardPaper = ({ children }) => {
       elevation={0}
           sx={{
         backgroundColor: '#F3EED1', 
-        border: '20px solid green', 
+        border: '20px solid #A8B640', 
         borderRadius: '20px', 
         boxShadow: '0 0 20px rgba(0, 0, 0, 0.5)', 
         padding: '20px', 
