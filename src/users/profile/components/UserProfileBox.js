@@ -122,7 +122,7 @@ const UserProfileBox = ({ userId, onSave, onCancel, editMode, setEditMode }) => 
             <Box sx={{ maxHeight: '60vh', overflowY: 'auto' }}> {/* Added container for scrollability */}
             {Object.entries(userData).filter(([key]) => !excludedFields.includes(key)).map(([key, value]) => (
             <Box key={key} sx={{ display: 'flex', flexDirection: 'column', mb: 2 }}>
-            <Typography variant="subtitle1" sx={{ color: 'yellow' }}>{key.charAt(0).toUpperCase()                                        + key.slice(1)}</Typography>
+            <Typography variant="subtitle1" sx={{ color: 'yellow' }}>{key.charAt(0).toUpperCase() + key.slice(1)}</Typography>
             <TextField
             value={value || ''}
             name={key}

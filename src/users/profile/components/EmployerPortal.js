@@ -25,6 +25,10 @@ const EmployerPortal = () => {
     navigate('/WalletDashboard');
   };
 
+    const navigateToMarketplace = () => {
+    navigate('/MarketplaceDashboard');
+  };
+
   const handleTokenMinted = (tokenId) => {
     setLatestTokenId(tokenId);
   };
@@ -36,9 +40,10 @@ const EmployerPortal = () => {
         {userAddress && (
              <>
             <MintJobRoleNFTButton userAddress={userAddress} onTokenMinted={handleTokenMinted} />
-            <Button style={{ fontSize: '17px', backgroundColor: '#808183', border: '2px solid #113171', color: '#D4E774', textAlign: 'left' }} onClick={navigateToWallet}>COLLECTIONS</Button>
-            <Button style={{ marginTop: '29px', fontSize: '17px', color: '#D4E774', textAlign: 'left' }}>LIST</Button>
-            <Button style={{ fontSize: '17px', color: '#D4E774', textAlign: 'left' }}>BURN</Button>
+            <Button style={{ fontSize: '17px', backgroundColor: '#808183', border: '2px solid #113171', color: '#D4E774', textAlign: 'left' }} onClick={navigateToWallet}>COLLECTION</Button>
+               <Button style={{ fontSize: '17px', color: '#D4E774', textAlign: 'left' }}>BURN</Button>
+              <Button style={{ fontSize: '17px', backgroundColor: '#808183', border: '2px solid #113171', color: '#D4E774', textAlign: 'left' }} onClick={navigateToMarketplace}>MARKETPLACE</Button>
+            <Button style={{ fontSize: '17px', color: '#D4E774', textAlign: 'left' }}>MANAGE LISTINGS</Button>
             <div>
               {/* Render the latest token ID */}
               <div style={{ color: 'white', margin: '0 0 0 12px', position: 'absolute', top: '384px', fontSize: '18px' }}>Latest Token ID: {latestTokenId}</div>

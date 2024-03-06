@@ -7,6 +7,7 @@ import JobSeekerDashboard from './users/profile/JobSeekerDashboard';
 import EmployerDashboard from './users/profile/EmployerDashboard';
 import RecruiterDashboard from './users/profile/RecruiterDashboard';
 import WalletDashboard from './users/profile/WalletDashboard';
+import MarketplaceDashboard from './users/profile/MarketplaceDashboard';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/employerdashboard" element={<EmployerDashboard />} />
         <Route path="/recruiterdashboard" element={<RecruiterDashboard />} />
         <Route path="/WalletDashboard" element={<WalletDashboard />} />
+        <Route path="/MarketplaceDashboard" element={<MarketplaceDashboard />} />
         {/* Add other routes as needed */}
       </Routes>
     </Router>
