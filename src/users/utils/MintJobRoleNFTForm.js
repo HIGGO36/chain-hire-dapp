@@ -1,7 +1,7 @@
 import React, { useState} from 'react';
 import { Box, Button,  CircularProgress, TextField, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { ethers } from 'ethers';
-import JobRoleNFTv4ABI from './abis/JobRoleNFTv4ABI.json';
+import JobRoleNFTv5ABI from './abis/JobRoleNFTv5ABI.json';
 
 // List of valid industries
 const validIndustries = [
@@ -84,8 +84,8 @@ const MintJobRoleNFTForm = ({ userAddress, onClose, onTokenMinted }) => {
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const contractAddress = process.env.REACT_APP_JOB_ROLE_NFT_V4_CONTRACT_ADDRESS;
-      const nftContract = new ethers.Contract(contractAddress, JobRoleNFTv4ABI, signer);
+      const contractAddress = process.env.REACT_APP_JOB_ROLE_NFT_V5_CONTRACT_ADDRESS;
+      const nftContract = new ethers.Contract(contractAddress, JobRoleNFTv5ABI, signer);
 
       const transaction = await nftContract.mintJobRoleNFT(userAddress, {
         companyName: formState.companyName,
