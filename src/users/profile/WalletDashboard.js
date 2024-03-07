@@ -83,29 +83,6 @@ const checkAndRequestApproval = async (tokenId, signer) => {
         console.log(`Token ID ${tokenId} already approved for transfer.`);
     }
 };
-
-// const listNFT = async (tokenId, price) => {
-//     if (!window.ethereum || !connectedAccount) return;
-
-//     try {
-//         const provider = new ethers.providers.Web3Provider(window.ethereum);
-//         await provider.send("eth_requestAccounts", []);
-//         const signer = provider.getSigner();
-        
-//         // Pass signer as an argument
-//         await checkAndRequestApproval(tokenId, signer);
-
-//         const marketplaceContract = new ethers.Contract(marketplaceListingAddress, MarketplaceListingv2ABI, signer);
-//         const listingPriceWei = ethers.utils.parseEther(price.toString());
-//         const transaction = await marketplaceContract.listJobRoleNFT(tokenId, listingPriceWei, { value: ethers.utils.parseEther("0.0005") });
-//         await transaction.wait();
-
-//         alert(`NFT with Token ID ${tokenId} is now listed for ${price} ETH.`);
-//     } catch (error) {
-//         console.error("Error listing NFT:", error);
-//         alert("There was an error listing your NFT.");
-//     }
-//     };
     
     const listNFT = async (tokenId, price) => {
     if (!window.ethereum || !connectedAccount) return;
@@ -132,26 +109,6 @@ const checkAndRequestApproval = async (tokenId, signer) => {
     }
 };
 
-
-//     const burnNFT = async (tokenId) => {
-//     if (!window.ethereum || !connectedAccount) return;
-
-//     try {
-//         const provider = new ethers.providers.Web3Provider(window.ethereum);
-//         await provider.send("eth_requestAccounts", []);
-//         const signer = provider.getSigner();
-//         const nftContract = new ethers.Contract(contractAddress, JobRoleNFTv5ABI, signer);
-
-//         const transaction = await nftContract.burn(tokenId);
-//         await transaction.wait();
-
-//         alert(`NFT with Token ID ${tokenId} has been successfully burned.`);
-//         // Optionally, refresh the NFT list here to reflect the change
-//     } catch (error) {
-//         console.error("Error burning NFT:", error);
-//         alert("There was an error burning the NFT.");
-//     }
-// };
 const burnNFT = async (tokenId) => {
     if (!window.ethereum || !connectedAccount) return;
 
@@ -173,8 +130,6 @@ const burnNFT = async (tokenId) => {
         alert("There was an error burning the NFT.");
     }
 };
-
-    
 
 const handleListingPriceChange = (index, value) => {
 const updatedNfts = [...nfts];
