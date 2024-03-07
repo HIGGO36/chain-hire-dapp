@@ -15,6 +15,12 @@ import RateReviewIcon from '@mui/icons-material/RateReview';
 
 export const mainListItems = (
   <React.Fragment>
+        <ListItemButton>
+      <ListItemIcon>
+        <ShoppingCartIcon />
+      </ListItemIcon>
+      <ListItemText primary="Applicants" />
+    </ListItemButton>
     <Link to="/EmployerDashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
       <ListItemButton>
         <ListItemIcon>
@@ -23,23 +29,25 @@ export const mainListItems = (
         <ListItemText primary="Dashboard" />
       </ListItemButton>
     </Link>
-    <ListItemButton>
+        <Link to="/MarketplaceDashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <ListItemButton>
+        <ListItemIcon>
+          <BuildCircleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Marketplace" />
+      </ListItemButton>
+    </Link>
+        <ListItemButton>
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Applicants" />
+      <ListItemText primary="Messages" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Recruiters" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Messages" />
     </ListItemButton>
     <Link to="/WalletDashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
       <ListItemButton>

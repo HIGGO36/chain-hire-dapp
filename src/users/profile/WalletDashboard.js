@@ -148,7 +148,7 @@ return (
 <Container maxWidth="lg" sx={{ marginTop: 2 }}> {/* Adjust marginTop if needed */}
 <MetaMaskConnectButton onConnect={setConnectedAccount} />
 <Typography variant="h4" gutterBottom sx={{ color: 'darkblue', marginTop: 2, marginBottom: 2, fontFamily: 'Roboto' }}>
-Your JobRoleNFTs
+Unlisted: JOB ROLES
 </Typography>
 {isLoading ? (
 <Typography sx={{ textAlign: 'center', color: 'darkblue' }}>Loading NFTs...</Typography>

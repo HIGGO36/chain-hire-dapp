@@ -68,7 +68,7 @@ return (
   <div style={{ position: 'relative', margin: '0 auto', width: '99%', maxWidth: '800px', height: '550px', backgroundColor: '#20336B', border: '10px solid #0E1D47', borderRadius: '10%', boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)', color: '#D4E774' }}>
 
 {latestNFT && (
-<Card style={{ position: 'absolute', top: '12%', left: '36%', padding: '10px', marginTop: '20px', backgroundColor: '#D7E5EB', color: '#031B25', zIndex: '9999' }}>
+<Card style={{ position: 'absolute', top: '0', left: '33%', padding: '10px', marginTop: '20px', backgroundColor: '#D7E5EB', color: '#031B25', zIndex: '9999' }}>
 <Typography variant="h6" style={{fontWeight: '650'}}>Last Minted: Job Role</Typography>
 <Typography>Token ID: {latestNFT.tokenId}</Typography>
 <Typography>Company: {latestNFT.companyName}</Typography>
