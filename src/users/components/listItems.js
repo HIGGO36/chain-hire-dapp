@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link } from 'react-router-dom';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -8,19 +8,22 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import BuildCircleIcon from '@mui/icons-material/BuildCircle';
+// Remove or comment out the unused import
+// import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import HelpIcon from '@mui/icons-material/Help';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 
 export const mainListItems = (
   <React.Fragment>
-        <ListItemButton>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Applicants" />
-    </ListItemButton>
+    <Link to="/Applicants" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <ListItemButton>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Applicants" />
+      </ListItemButton>
+    </Link>
     <Link to="/EmployerDashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
       <ListItemButton>
         <ListItemIcon>
@@ -29,42 +32,45 @@ export const mainListItems = (
         <ListItemText primary="Dashboard" />
       </ListItemButton>
     </Link>
-        <Link to="/MarketplaceDashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
+    <Link to="/MarketplaceDashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
       <ListItemButton>
         <ListItemIcon>
-          <BuildCircleIcon />
+          <ShoppingCartIcon />
         </ListItemIcon>
         <ListItemText primary="Marketplace" />
       </ListItemButton>
     </Link>
-        <ListItemButton>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Messages" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Recruiters" />
-    </ListItemButton>
+    <Link to="/Messages" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <ListItemButton>
+        <ListItemIcon>
+          <NotificationsIcon />
+        </ListItemIcon>
+        <ListItemText primary="Messages" />
+      </ListItemButton>
+    </Link>
+    <Link to="/Recruiters" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <ListItemButton>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Recruiters" />
+      </ListItemButton>
+    </Link>
     <Link to="/WalletDashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
       <ListItemButton>
         <ListItemIcon>
-          <BuildCircleIcon />
+          <BarChartIcon />
         </ListItemIcon>
-        <ListItemText primary="Manage" />
+        <ListItemText primary="Wallet" />
       </ListItemButton>
     </Link>
   </React.Fragment>
 );
 
-// The secondaryListItems remains unchanged
 export const secondaryListItems = (
- <React.Fragment>
-    <ListSubheader component="div" inset  sx={{background: '#747D8B', fontSize: '16px', color: '#D0FF7F', fontWeight: '600'}}>
-     Additional Services
+  <React.Fragment>
+    <ListSubheader component="div" inset sx={{ background: '#747D8B', fontSize: '16px', color: '#D0FF7F', fontWeight: '600' }}>
+      Additional Services
     </ListSubheader>
     <ListItemButton>
       <ListItemIcon>

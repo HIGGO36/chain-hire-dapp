@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Card, Typography } from '@mui/material';
+import { Box, Button, Card, Typography } from '@mui/material';
 import MetaMaskConnectButton from './MetaMaskConnectButton';
 import MintJobRoleNFTButton from '../../utils/MintJobRoleNFTButton';
 import { ethers } from 'ethers';
@@ -64,25 +64,77 @@ const savedNFT = localStorage.getItem('latestNFT');
   fetchNFTDetails();
   };
 
-return (
-  <div style={{ position: 'relative', margin: '0 auto', width: '99%', maxWidth: '800px', height: '550px', backgroundColor: '#20336B', border: '10px solid #0E1D47', borderRadius: '10%', boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)', color: '#D4E774' }}>
+ const scrollableTextStyle = {
+    maxHeight: '110px',
+    overflowY: 'auto',
+    padding: '5px',
+    border: '1px solid #ccc',
+    marginBottom: '8px', // Give some space between the boxes
+    '&::-webkit-scrollbar': {
+      width: '8px',
+    },
+    '&::-webkit-scrollbar-track': {
+      background: '#f1f1f1',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: '#888',
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      background: '#555',
+    },
+  };
 
+  // Function to truncate text to a maximum character count
+function truncateText(text, maxLength) {
+  if (text.length <= maxLength) {
+    return text;
+  }
+  return text.substring(0, maxLength) + '...';
+  }
+  
+  // Example usage of truncateText function
+  const companyName = truncateText(latestNFT.companyName, 20);
+  const jobRoleTitle = truncateText(latestNFT.jobRoleTitle, 20);
+  const industry = truncateText(latestNFT.industry, 20);
+  const workLocationType = truncateText(latestNFT.workLocationType, 20);
+  const location = truncateText(latestNFT.location, 20);
+  const country = truncateText(latestNFT.country, 20);
+  
+  return (
+    <div style={{ position: 'relative', margin: '0 auto', width: '99%', maxWidth: '800px', height: '600px', backgroundColor: '#20336B', border: '10px solid #0E1D47', borderRadius: '10%', boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)', color: '#D4E774' }}>
+      
+<Typography variant="h6" style={{ fontWeight: '650', position: 'relative', left: '20px', top: '15px', fontSize: '21px', fontFamily: 'math' }}>Last Minted: Job Role</Typography>
+<Typography style={{ fontWeight: '600', color: 'white', position: 'relative', top: '20px', left: '20px', fontSize: '19px' }}>Token ID: {latestNFT.tokenId}</Typography>
+
+  <Typography style={{ fontWeight: '500', position: 'absolute', right: '60px', top: '15px', color: 'gold', marginBottom: '6px',fontSize: '21px', fontFamily: 'monospace' }}>Company: {companyName}</Typography>
+  <Typography style={{ fontWeight: '550', position: 'absolute', right: '60px', top: '48px', marginTop: '2px', color: 'white', fontSize: '19px', fontFamily: 'monospace' }}>Job Role: {jobRoleTitle}</Typography>
+
+  <Typography style={{ fontWeight: '500', position: 'absolute', right: '18px', top: '80px', marginTop: '10px', color: 'lightgreen', fontSize: '19px', fontFamily: 'monospace'}}>Industry: {industry}</Typography>
+
+  <Typography style={{ fontWeight: '500', position: 'absolute', right: '19px', top: '115px', marginTop: '2px', color: 'white', fontSize: '19px', fontFamily: 'monospace'}}>Location Type: {workLocationType}</Typography>
+  <Typography style={{ fontWeight: '500', position: 'absolute', right: '9px', top: '146px', marginTop: '10px', color: 'lightyellow', fontSize: '19px', fontFamily: 'monospace'}}>Location: {location}</Typography>
+    
+      <Typography style={{ fontWeight: '500', position: 'absolute', right: '0px', top: '178px', marginTop: '12px', color: 'gold', fontSize: '19px', fontFamily: 'monospace' }}>Country: {country}</Typography>
+   
 {latestNFT && (
-<Card style={{ position: 'absolute', top: '0', left: '33%', padding: '10px', marginTop: '20px', backgroundColor: '#D7E5EB', color: '#031B25', zIndex: '9999' }}>
-<Typography variant="h6" style={{fontWeight: '650'}}>Last Minted: Job Role</Typography>
-<Typography>Token ID: {latestNFT.tokenId}</Typography>
-<Typography>Company: {latestNFT.companyName}</Typography>
-<Typography>Industry: {latestNFT.industry}</Typography>
-<Typography>Job Role: {latestNFT.jobRoleTitle}</Typography>
-<Typography>Min Salary: {latestNFT.minSalary} ETH</Typography>
-<Typography>Max Salary: {latestNFT.maxSalary} ETH</Typography>
-<Typography>Location Type: {latestNFT.workLocationType}</Typography>
-<Typography>Country: {latestNFT.country}</Typography>
-<Typography>Location: {latestNFT.location}</Typography>
-<Typography>Position Summary: {latestNFT.positionSummary}</Typography>
-<Typography>Responsibilities: {latestNFT.responsibilities}</Typography>
-<Typography>Qualifications: {latestNFT.qualifications}</Typography>
-<Typography>Life Span: {latestNFT.lifeSpan} days</Typography>
+<Card style={{ position: 'absolute', top: '-18px', left: '31%', maxWidth: '300px', height: '576px', padding: '10px', marginTop: '20px', backgroundColor: '#D7E5EB', color: '#031B25' }}>
+<Typography style={{ fontWeight: '600', marginBottom: '6px', marginTop: '6px', fontSize: '18px' }}>Min Salary: {latestNFT.minSalary} ETH</Typography>
+<Typography style={{ fontWeight: '600', marginBottom: '6px', fontSize: '18px' }}>Max Salary: {latestNFT.maxSalary} ETH</Typography>
+
+<Typography style={{ fontWeight: '600', marginBottom: '0px' }} variant="subtitle1" gutterBottom>Position Summary:</Typography>
+<Box sx={scrollableTextStyle}>
+<Typography variant="body2" style={{ background: 'white', padding: '5px', border: '2px solid grey', fontSize: '14px' }}>{latestNFT.positionSummary}</Typography>
+</Box>
+<Typography style={{ fontWeight: '600', marginBottom: '0px' }} variant="subtitle1" gutterBottom>Responsibilities:</Typography>
+<Box sx={scrollableTextStyle}>
+<Typography variant="body2" style={{ background: 'white', padding: '5px', border: '2px solid grey', fontSize: '14px' }}>{latestNFT.responsibilities}</Typography>
+</Box>
+<Typography style={{ fontWeight: '600', marginBottom: '0px' }} variant="subtitle1" gutterBottom>Qualifications:</Typography>
+<Box sx={scrollableTextStyle}>
+<Typography variant="body2" style={{ background: 'white', padding: '5px', border: '2px solid grey', fontSize: '14px' }}>{latestNFT.qualifications}</Typography>
+</Box>
+
+<Typography style={{ fontWeight: '650', marginTop: '10px', marginBottom: '10px', fontSize: '19px' }}>Life Span: {latestNFT.lifeSpan} days</Typography>
 </Card>
 )}
 <div style={{ position: 'absolute', top: '230px', left: '90px', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', gap: '20px' }}>

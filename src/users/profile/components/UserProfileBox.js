@@ -1,150 +1,144 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, TextField, Typography, Modal, Backdrop, Fade } from '@mui/material';
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 const modalStyle = {
-    position: 'absolute',
-    top: '55.1%',
-    left: '55%',
-    transform: 'translate(-50%, -50%)',
-    width: '70%',
-    maxWidth: '806px',
-    margin: '20px',
-    padding: '26px',
-    backgroundColor: 'black', 
-    color: 'white', 
-    border: '10px solid white', 
-    borderRadius: '10px', 
-    boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)', 
-    overflow: 'hidden',
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
 };
 
 const userProfileButtonStyle = {
-    display: 'block',
-    margin: '10px auto',
-    minWidth: '60%',
-    color: 'black', 
-    fontSize: '14px',
-    backgroundColor: '#6467F0', 
-    borderr: '5px solid #515A5C',
-    borderRadius: '5px', 
-    padding: '15px', 
-    marginBottom: '20px', 
-    fontWeight: '600',
+  display: 'block',
+  margin: '10px auto',
+  minWidth: '60%',
+  color: 'white',
+  fontSize: '14px',
+  backgroundColor: '#6467F0',
+  border: '2px solid #515A5C',
+  borderRadius: '5px',
+  padding: '15px',
+  marginBottom: '20px',
+  fontWeight: '600',
+  '&:hover': {
+    backgroundColor: '#5558F0',
+  },
 };
 
-const UserProfileBox = ({ userId, onSave, onCancel, editMode, setEditMode }) => {
-    const [userData, setUserData] = useState({});
-    const [openModal, setOpenModal] = useState(false);
+const UserProfileBox = () => {
+  const [userData, setUserData] = useState({});
+  const [open, setOpen] = useState(false);
+  const auth = getAuth();
 
-    useEffect(() => {
-        const auth = getAuth();
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                user.getIdToken().then(idToken => {
-                    fetch('http://localhost:3001/api/users/profile', {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': `Bearer ${idToken}`,
-                            'Content-Type': 'application/json',
-                        },
-                    })
-                    .then(response => {
-                        if (!response.ok) throw new Error('Could not fetch user data');
-                        return response.json();
-                    })
-                    .then(data => {
-                        setUserData(data || {});
-                        setEditMode(false);
-                    })
-                    .catch(error => {
-                        console.error('Error fetching user data:', error);
-                        alert('Error fetching user data. Please try again later.');
-                    });
-                });
-            } else {
-                console.log("User not signed in or session expired");
-                setUserData({});
-            }
-        });
-    }, [userId, setEditMode]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^\(\d{3}\)-\d{3}-\d{4}$/;
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        // Check for email format
-        if (name === 'email' && !emailRegex.test(value)) {
-            alert('Invalid email format. Please use a valid email address.');
-            return;
-        }
-        // Check for phone format
-        if (name === 'telephone' && !phoneRegex.test(value)) {
-            alert('Invalid telephone number format. Please use the format (XXX)-XXX-XXXX.');
-            return;
-        }
-        setUserData(prevData => ({ ...prevData, [name]: value }));
+      const idToken = await user.getIdToken(true);
+      fetch(`http://localhost:3001/api/users/profile`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${idToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setUserData(data))
+        .catch((error) => console.error('Error fetching user data:', error));
     };
 
-    const handlePasswordReset = () => {
-        const auth = getAuth();
-        if (auth.currentUser) {
-            const emailAddress = auth.currentUser.email;
-            sendPasswordResetEmail(auth, emailAddress).then(() => {
-                alert('Password reset email sent successfully.');
-            }).catch((error) => {
-                console.error("Error sending password reset email:", error);
-                alert('Failed to send password reset email. Please try again later.');
-            });
-        }
-    };
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth.currentUser?.uid]);
 
-    // Determine excluded fields based on userType
-    let excludedFields = ['userType', 'businessEmail'];
-    if (userData.userType === 'Job Seeker') {
-        excludedFields = Object.keys(userData).filter(key => key !== 'email');
-    }
+const handleSave = async () => {
+const idToken = await auth.currentUser.getIdToken(true);
+fetch(`http://localhost:3001/api/users/profile`, {
+method: 'PUT',
+headers: {
+'Authorization': `Bearer ${idToken}`,
+'Content-Type': 'application/json',
+},
+body: JSON.stringify(userData),
+})
+.then(response => {
+if (response.ok) {
+alert('Profile updated successfully');
+setOpen(false);
+} else {
+alert('Failed to update profile');
+}
+})
+.catch(error => console.error("Error updating user data:", error));
+};
 
-    return (
-            <>
-            <Button sx={userProfileButtonStyle} variant="outlined" onClick={() => { setOpenModal(true); setEditMode(true); }}>
-            Edit Profile</Button>
-            <Modal
-            open={openModal}
-            onClose={() => { setOpenModal(false); setEditMode(false); }}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{ timeout: 500 }}>
-            <Fade in={openModal}>
-            <Box sx={modalStyle}>
-            <Typography variant="h6" gutterBottom>User Profile</Typography>
-            <Box sx={{ maxHeight: '60vh', overflowY: 'auto' }}> {/* Added container for scrollability */}
-            {Object.entries(userData).filter(([key]) => !excludedFields.includes(key)).map(([key, value]) => (
-            <Box key={key} sx={{ display: 'flex', flexDirection: 'column', mb: 2 }}>
-            <Typography variant="subtitle1" sx={{ color: 'yellow' }}>{key.charAt(0).toUpperCase() + key.slice(1)}</Typography>
-            <TextField
-            value={value || ''}
-            name={key}
-            onChange={handleChange}
-            disabled={!editMode}
-            variant="outlined"
-            sx={{ backgroundColor: '#f0f0f0', mt: 1 }} 
-            />
-            </Box>
-            ))}
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-            <Button variant="contained" color="primary" onClick={() => { onSave(userData); setOpenModal(false); setEditMode(false); }}>Save</Button>
-            <Button variant="outlined" color="secondary" onClick={()=> { setOpenModal(false); setEditMode(false); }}>Cancel</Button>
-            <Button variant="outlined" color="warning" onClick={handlePasswordReset}>Reset Password</Button>
-            </Box>
-            </Box>
-            </Fade>
-            </Modal>
-            </>
-            );
-            };
+const handleChange = (event) => {
+const { name, value } = event.target;
+setUserData(prev => ({ ...prev, [name]: value }));
+};
+
+const handleOpen = () => setOpen(true);
+const handleClose = () => setOpen(false);
+
+const handlePasswordReset = () => {
+if (auth.currentUser) {
+sendPasswordResetEmail(auth, auth.currentUser.email)
+.then(() => alert("Password reset email sent successfully."))
+.catch(error => {
+console.error("Error sending password reset email: ", error);
+alert("Error sending password reset email.");
+});
+}
+};
+
+return (
+<>
+<Button onClick={handleOpen} style={userProfileButtonStyle}>Edit Profile</Button>
+<Modal
+open={open}
+onClose={handleClose}
+aria-labelledby="modal-modal-title"
+aria-describedby="modal-modal-description"
+closeAfterTransition
+BackdropComponent={Backdrop}
+BackdropProps={{ timeout: 500 }}
+>
+<Fade in={open}>
+<Box sx={modalStyle}>
+<Typography id="modal-modal-title" variant="h6" component="h2">
+Edit Profile
+</Typography>
+{Object.entries(userData).map(([key, value]) => (
+<TextField
+key={key}
+fullWidth
+margin="dense"
+label={key.charAt(0).toUpperCase() + key.slice(1)}
+variant="outlined"
+name={key}
+value={value}
+onChange={handleChange}
+/>
+))}
+<Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+<Button onClick={handleSave} sx={{ mr: 1 }}>Save</Button>
+<Button onClick={handleClose} color="error">Cancel</Button>
+</Box>
+<Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+<Button onClick={handlePasswordReset} color="warning">Reset Password</Button>
+</Box>
+</Box>
+</Fade>
+</Modal>
+</>
+);
+};
 
 export default UserProfileBox;
-
