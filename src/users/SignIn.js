@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useUser } from './../../src/contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import AlertMessage from './components/AlertMessage';
 import TextInputField from './components/TextInputField';
@@ -12,6 +13,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 const DefaultTheme = createTheme();
 
 function SignIn() {
+    const { setUserType } = useUser();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [alertInfo, setAlertInfo] = useState({ message: '', severity: '' });
@@ -29,7 +31,6 @@ function SignIn() {
 
             // Send the token to your server
             const response = await fetch('http://localhost:3001/api/users/verifyToken', {
-            //  const response = await fetch(' https://young-ravine-47125-71f43e0f6395.herokuapp.com/api/users/verifyToken', {
            
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -42,10 +43,13 @@ function SignIn() {
 
             if (result.success) {
                 const formattedUserType = result.userType.replace(/\s+/g, '').toLowerCase();
+                setUserType(formattedUserType); 
                 navigate(`/${formattedUserType}dashboard`);
             } else {
                 setAlertInfo({ message: result.message || "Sign-in failed. Please try again.", severity: "error" });
             }
+
+            
         } catch (error) {
             console.error("Sign-in error:", error);
             setAlertInfo({ message: "Network or server error during sign-in.", severity: "error" });

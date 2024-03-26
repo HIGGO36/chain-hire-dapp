@@ -84,31 +84,31 @@ export default function JobSeekerDashboard() {
   };
 
 return (
-       <ThemeProvider theme={defaultTheme}>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <DashboardAppBar open={open} handleDrawerOpen={toggleDrawerOpen} />
-        <DashboardDrawer open={open} handleDrawerClose={toggleDrawerClose} />
-        <Box component="main" sx={{ flexGrow: 1, height: '100vh', overflow: 'auto',
-            backgroundColor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],}} >
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            {/* Use DashboardPaper component */}
-          <DashboardPaper>
-            <ScrollingBar userData={userData} /> {/* Add the ScrollingBar component here */}
-               {/* <OvalPortal onConnect={handleConnect} userType={userType} portalStyle={{ display: 'flex', justifyContent: 'center', marginTop: '20px', minHeight: '420px' }} /> */}
-              <JobSeekerPortal portalStyle={{ display: 'flex', justifyContent: 'center', marginTop: '20px', minHeight: '420px' }} />
-              <UserProfileBox
-                userData={userData}
-                onSave={handleSave}
-                onCancel={handleCancel}
-                editMode={editMode}
-                setEditMode={setEditMode}
-                style={userProfileBoxStyle}/>
-              <Copyright sx={{ pt: 4 }} />
-            </DashboardPaper>
-          </Container>
-        </Box>
-      </Box>
-    </ThemeProvider>
-  );
+<ThemeProvider theme={defaultTheme}>
+<Box sx={{ display: 'flex' }}>
+<CssBaseline />
+<DashboardAppBar open={open} handleDrawerOpen={toggleDrawerOpen} />
+<DashboardDrawer open={open} handleDrawerClose={toggleDrawerClose} />
+<Box component="main" sx={{ flexGrow: 1, height: '100vh', overflow: 'auto',
+backgroundColor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],}} >
+<Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+{/* Use DashboardPaper component */}
+<DashboardPaper>
+<ScrollingBar userData={userData} /> {/* Add the ScrollingBar component here */}
+{/* <OvalPortal onConnect={handleConnect} userType={userType} portalStyle={{ display: 'flex', justifyContent: 'center', marginTop: '20px', minHeight: '420px' }} /> */}
+<JobSeekerPortal portalStyle={{ display: 'flex', justifyContent: 'center', marginTop: '20px', minHeight: '420px' }} />
+<UserProfileBox
+userData={userData}
+onSave={handleSave}
+onCancel={handleCancel}
+editMode={editMode}
+setEditMode={setEditMode}
+style={userProfileBoxStyle}/>
+<Copyright sx={{ pt: 4 }} />
+</DashboardPaper>
+</Container>
+</Box>
+</Box>
+</ThemeProvider>
+);
 }

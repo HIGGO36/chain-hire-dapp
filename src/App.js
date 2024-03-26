@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { UserProvider } from './../src/contexts/UserContext';
 import Home from './templates/frontend/Home';
 import UsersSignIn from './users/UsersSignIn';
 import UserSignUp from './users/UserSignUp';
@@ -12,7 +13,7 @@ import MarketplaceDashboard from './users/profile/MarketplaceDashboard';
 
 function App() {
   return (
-    // If need a context/provider for user state, use it here. 
+    <UserProvider>
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -25,7 +26,8 @@ function App() {
         <Route path="/MarketplaceDashboard" element={<MarketplaceDashboard />} />
         {/* Add other routes as needed */}
       </Routes>
-    </Router>
+      </Router>
+      </UserProvider>
   );
 }
 

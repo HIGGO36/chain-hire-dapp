@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Card, Typography } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Box, Button, Card, Typography } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MetaMaskConnectButton from './MetaMaskConnectButton';
 import MintJobRoleNFTButton from '../../utils/MintJobRoleNFTButton';
 import { ethers } from 'ethers';
@@ -92,7 +93,7 @@ function truncateText(text, maxLength) {
   return text.substring(0, maxLength) + '...';
   }
   
-  // Example usage of truncateText function
+  //  usage of truncateText function
   const companyName = truncateText(latestNFT.companyName, 20);
   const jobRoleTitle = truncateText(latestNFT.jobRoleTitle, 20);
   const industry = truncateText(latestNFT.industry, 20);
@@ -105,17 +106,7 @@ function truncateText(text, maxLength) {
       
 <Typography variant="h6" style={{ fontWeight: '650', position: 'relative', left: '20px', top: '15px', fontSize: '21px', fontFamily: 'math' }}>Last Minted: Job Role</Typography>
 <Typography style={{ fontWeight: '600', color: 'white', position: 'relative', top: '20px', left: '20px', fontSize: '19px' }}>Token ID: {latestNFT.tokenId}</Typography>
-
-  <Typography style={{ fontWeight: '500', position: 'absolute', right: '60px', top: '15px', color: 'gold', marginBottom: '6px',fontSize: '21px', fontFamily: 'monospace' }}>Company: {companyName}</Typography>
-  <Typography style={{ fontWeight: '550', position: 'absolute', right: '60px', top: '48px', marginTop: '2px', color: 'white', fontSize: '19px', fontFamily: 'monospace' }}>Job Role: {jobRoleTitle}</Typography>
-
-  <Typography style={{ fontWeight: '500', position: 'absolute', right: '18px', top: '80px', marginTop: '10px', color: 'lightgreen', fontSize: '19px', fontFamily: 'monospace'}}>Industry: {industry}</Typography>
-
-  <Typography style={{ fontWeight: '500', position: 'absolute', right: '19px', top: '115px', marginTop: '2px', color: 'white', fontSize: '19px', fontFamily: 'monospace'}}>Location Type: {workLocationType}</Typography>
-  <Typography style={{ fontWeight: '500', position: 'absolute', right: '9px', top: '146px', marginTop: '10px', color: 'lightyellow', fontSize: '19px', fontFamily: 'monospace'}}>Location: {location}</Typography>
-    
-      <Typography style={{ fontWeight: '500', position: 'absolute', right: '0px', top: '178px', marginTop: '12px', color: 'gold', fontSize: '19px', fontFamily: 'monospace' }}>Country: {country}</Typography>
-   
+      
 {latestNFT && (
 <Card style={{ position: 'absolute', top: '-18px', left: '31%', maxWidth: '300px', height: '576px', padding: '10px', marginTop: '20px', backgroundColor: '#D7E5EB', color: '#031B25' }}>
 <Typography style={{ fontWeight: '600', marginBottom: '6px', marginTop: '6px', fontSize: '18px' }}>Min Salary: {latestNFT.minSalary} ETH</Typography>
@@ -135,18 +126,76 @@ function truncateText(text, maxLength) {
 </Box>
 
 <Typography style={{ fontWeight: '650', marginTop: '10px', marginBottom: '10px', fontSize: '19px' }}>Life Span: {latestNFT.lifeSpan} days</Typography>
-</Card>
-)}
+        </Card>
+      )}
 <div style={{ position: 'absolute', top: '230px', left: '90px', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', gap: '20px' }}>
 <MetaMaskConnectButton style={{ position: 'fixed', top: '-60px', left: '8px', fontSize: '14px', color: '#D4E774' }} onConnect={handleConnect} />
 {userAddress && (
 <>
 <MintJobRoleNFTButton userAddress={userAddress} onTokenMinted={handleTokenMinted} />
 <Button style={{ fontSize: '17px', backgroundColor: '#808183', border: '2px solid #113171', color: '#D4E774', textAlign: 'left' }} onClick={navigateToWallet}>COLLECTION</Button>
-<Button style={{ fontSize: '17px', backgroundColor: '#808183', border: '2px solid #113171', color: '#D4E774', textAlign: 'left' }} onClick={navigateToMarketplace}>MARKETPLACE</Button>       
-</>
+<Button style={{ fontSize: '17px', backgroundColor: '#808183', border: '2px solid #113171', color: '#D4E774', textAlign: 'left' }} onClick={navigateToMarketplace}>MARKETPLACE</Button>              
+</>        
 )}
 </div>
+<>
+<div style={{ width: '18%', right: '10px', top: '40px', position: 'absolute'}}>
+<Accordion>
+<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+<Typography>Company</Typography>
+</AccordionSummary>
+<AccordionDetails>
+<Typography>{companyName}</Typography>
+</AccordionDetails>
+</Accordion>
+
+<Accordion>
+<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+<Typography>Job Role</Typography>
+</AccordionSummary>
+<AccordionDetails>
+<Typography>{jobRoleTitle}</Typography>
+</AccordionDetails>
+</Accordion>
+
+<Accordion>
+<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+<Typography>Industry</Typography>
+</AccordionSummary>
+<AccordionDetails>
+<Typography>{industry}</Typography>
+</AccordionDetails>
+</Accordion>
+
+<Accordion>
+<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+<Typography>Location</Typography>
+</AccordionSummary>
+<AccordionDetails>
+<Typography>{location}</Typography>
+</AccordionDetails>
+</Accordion>
+
+<Accordion>
+<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+<Typography>Type</Typography>
+</AccordionSummary>
+<AccordionDetails>
+<Typography>{workLocationType}</Typography>
+</AccordionDetails>
+</Accordion>
+
+<Accordion>
+<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+<Typography>Country</Typography>
+</AccordionSummary>
+<AccordionDetails>
+<Typography>{country}</Typography>
+</AccordionDetails>
+</Accordion>
+
+</div>
+</>
 </div>
 );
 };

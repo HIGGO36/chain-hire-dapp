@@ -7,18 +7,6 @@ const RecruiterPortal = () => {
   // State to hold the user's Ethereum address
   const [userAddress, setUserAddress] = useState(null);
 
-  const ovalStyle = {
-    position: 'relative',
-    margin: '0 auto',
-    width: '99%',
-    maxWidth: '800px',
-    height: '550px',
-    backgroundColor: 'black',
-    border: '10px solid white',
-    borderRadius: '10%',
-    boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)',
-  };
-
   const buttonContainerStyle = {
     position: 'absolute',
     top: '50%',
@@ -44,7 +32,8 @@ const RecruiterPortal = () => {
   };
 
   return (
-    <div style={ovalStyle}>
+       <div style={{ position: 'relative', margin: '0 auto', width: '99%', maxWidth: '800px', height: '600px', backgroundColor: '#20336B', border: '10px solid #0E1D47', borderRadius: '10%', boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)', color: '#D4E774' }}>
+
       <div style={buttonContainerStyle}>
         <MetaMaskConnectButton onConnect={handleConnect} />
         {userAddress && <MintJobRoleNFTButton userAddress={userAddress} />}
@@ -52,8 +41,9 @@ const RecruiterPortal = () => {
         <Button style={buttonStyle}>SELL</Button>
         <Button style={buttonStyle}>LIST</Button>
         <Button style={buttonStyle}>BURN</Button>
+
       </div>
-    </div>
+      </div>
   );
 };
 

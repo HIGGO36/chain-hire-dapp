@@ -95,8 +95,6 @@ export default function Dashboard() {
   <DashboardDrawer open={open} handleDrawerClose={toggleDrawerClose} />
   <Box component="main" sx={{ flexGrow: 1, height: '100vh', overflow: 'auto', margin: '50px 0px 20px 0px', background: 'linear-gradient(to right, #9FA8AC, #FFFFFF)'}} >
   <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-  {/* Use DashboardPaper component */}
-
   <ScrollingBar userData={userData} /> {/* Add the ScrollingBar component here */}
   <EmployerPortal portalStyle={{ display: 'flex', justifyContent: 'center', marginTop: '20px', minHeight: '420px' }} />
   <UserProfileBox
