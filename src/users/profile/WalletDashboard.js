@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ethers } from 'ethers';
-import { Button, CssBaseline, Box, Container, ThemeProvider, createTheme, Typography, Grid, Card, CardContent, TextField } from '@mui/material';
+import { Button, CssBaseline, Box, Container,  Modal, ThemeProvider, createTheme, Typography, Grid, Card, CardContent, TextField } from '@mui/material';
+
 import JobRoleNFTv5ABI from '../utils/abis/JobRoleNFTv5ABI.json';
 import Marketplacev7ABI from '../utils/abis/Marketplacev7ABI.json';
 import MetaMaskConnectButton from './components/MetaMaskConnectButton';
@@ -10,15 +11,20 @@ import { DashboardDrawer } from './components/DashboardDrawer';
 const defaultTheme = createTheme();
 
 const WalletDashboard = () => {
-  const [nfts, setNfts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [connectedAccount, setConnectedAccount] = useState(localStorage.getItem('userAddress') || null);
-  const contractAddress = process.env.REACT_APP_JOB_ROLE_NFT_V5_CONTRACT_ADDRESS;
-  const marketplaceContractAddress = process.env.REACT_APP_MARKETPLACE_V7_ADDRESS;
+const [nfts, setNfts] = useState([]);
+const [isLoading, setIsLoading] = useState(true);
+const [connectedAccount, setConnectedAccount] = useState(localStorage.getItem('userAddress') || null);
+const [recipientAddress, setRecipientAddress] = useState('');
+const contractAddress = process.env.REACT_APP_JOB_ROLE_NFT_V5_CONTRACT_ADDRESS;
+const marketplaceContractAddress = process.env.REACT_APP_MARKETPLACE_V7_ADDRESS;
   
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const toggleDrawerOpen = () => setDrawerOpen(true);
-  const toggleDrawerClose = () => setDrawerOpen(false);
+const [drawerOpen, setDrawerOpen] = useState(false);
+const toggleDrawerOpen = () => setDrawerOpen(true);
+const toggleDrawerClose = () => setDrawerOpen(false);
+
+const [isModalOpen, setIsModalOpen] = useState(false);
+const [selectedTokenId, setSelectedTokenId] = useState(null);
+
 
 const fetchNFTs = useCallback(async (account) => {
 if (!window.ethereum || !account) {
@@ -115,7 +121,59 @@ fetchNFTs(connectedAccount);
     console.error("Failed to list NFT:", error);
     alert(`Failed to list NFT: ${error.message}`);
   }
+  };
+  
+  const handleRecipientAddressChange = (event) => {
+  setRecipientAddress(event.target.value);
+  };
+  
+  const sendNFT = async (tokenId) => {
+  if (!recipientAddress) {
+    alert('Please enter a recipient address.');
+    return;
+  }
+  try {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    const signer = provider.getSigner();
+    const nftContract = new ethers.Contract(contractAddress, JobRoleNFTv5ABI, signer);
+
+    const transaction = await nftContract.transferFrom(connectedAccount, recipientAddress, tokenId);
+    await transaction.wait();
+
+    alert(`NFT with Token ID ${tokenId} has been successfully sent to ${recipientAddress}.`);
+    // Optionally refresh the NFT list here
+  } catch (error) {
+    console.error('Failed to send NFT:', error);
+    alert(`Failed to send NFT: ${error.message}`);
+  }
 };
+
+
+const SendNFTModal = ({ isOpen, onClose, onSend }) => (
+  <Modal open={isOpen} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+    <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
+      <Typography id="modal-modal-title" variant="h6" component="h2">
+        Send NFT
+      </Typography>
+      <TextField
+        autoFocus
+        margin="dense"
+        id="recipientAddress"
+        label="Recipient Address"
+        type="text"
+        fullWidth
+        variant="outlined"
+        value={recipientAddress}
+        onChange={handleRecipientAddressChange}
+        sx={{ mt: 2 }}
+      />
+      <Button onClick={() => onSend(selectedTokenId)} sx={{ mt: 2 }}>
+        Send NFT
+      </Button>
+    </Box>
+  </Modal>
+);
 
   
 const burnNFT = async (tokenId) => {
@@ -170,8 +228,6 @@ const handleListingPriceChange = (index, value) => {
   // This effectively prevents invalid input from being entered
 };
 
-
-
 return (
 <ThemeProvider theme={defaultTheme}>
 <CssBaseline />
@@ -208,20 +264,13 @@ Unlisted: JOB ROLES
 <Typography variant="body2">Qualifications: {nft.qualifications}</Typography>
 <Typography variant="body2">Life Span: {nft.lifeSpan} days</Typography>
         
-      <TextField
-  label="Listing Price (ETH)"
-  type="text"
-  variant="outlined"
-  size="small"
-  fullWidth
-  value={nft.listingPrice}
-  onChange={(e) => handleListingPriceChange(index, e.target.value)}
-  sx={{ my: 2 }}
-/>
-  
+<TextField label="Listing Price (ETH)" type="text" variant="outlined" size="small" fullWidth value={nft.listingPrice}
+onChange={(e) => handleListingPriceChange(index, e.target.value)} sx={{ my: 2 }} />
 
+<Button variant="contained" color="primary" onClick={() => { setSelectedTokenId(nft.tokenId); setIsModalOpen(true);}}>Send</Button>
+<SendNFTModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSend={(tokenId) => { sendNFT(tokenId); setIsModalOpen(false);}}/>
 <Button variant="contained" color="primary" onClick={() => listNFT(nft.tokenId, nft.listingPrice)}>List</Button>
-<Button variant="contained" color="secondary" onClick={() => burnNFT(nft.tokenId)} sx={{ ml: 1 }}>Burn</Button>
+<Button variant="contained" color="secondary" onClick={() => burnNFT(nft.tokenId)} sx={{ ml: 1 }}>Burn</Button>     
 
 </CardContent>
 </Card>
