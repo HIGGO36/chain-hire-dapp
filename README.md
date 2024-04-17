@@ -28,17 +28,22 @@ Chain Hire is a decentralized application (DApp) designed to revolutionize the j
 ### Setup
 
 1. **Clone the Repository**
+
 git clone https://github.com/<username>/chain-hire-dapp.git
+
 cd chain-hire-dapp
 
 2. **Install Dependencies**
-yarn install
 
-3. **Running the Development Server**
-yarn start
+npm install
 
-4. **Building for Production**
-yarn build
+3. **Building for Production**
+
+npm run build
+
+4. **Running the Development Server**
+
+npm start
 
 ## Architecture
 

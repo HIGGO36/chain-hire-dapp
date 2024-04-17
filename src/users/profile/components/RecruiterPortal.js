@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 import MetaMaskConnectButton from './MetaMaskConnectButton';
-import MintJobRoleNFTButton from '../../utils/MintJobRoleNFTButton';
 
 const RecruiterPortal = () => {
   // State to hold the user's Ethereum address
@@ -25,6 +24,14 @@ const RecruiterPortal = () => {
     margin: '4px 4px 0 4px',
   };
 
+    // Effect to check for stored user address
+  useEffect(() => {
+    const storedAddress = localStorage.getItem(userAddress);
+    if (storedAddress) {
+      setUserAddress(storedAddress);
+    }
+  }, []);
+
   // Callback function to handle the connection and receive the user's Ethereum address
   const handleConnect = (account) => {
     console.log(`Connected to MetaMask with account: ${account}`);
@@ -36,7 +43,7 @@ const RecruiterPortal = () => {
 
       <div style={buttonContainerStyle}>
         <MetaMaskConnectButton onConnect={handleConnect} />
-        {userAddress && <MintJobRoleNFTButton userAddress={userAddress} />}
+        {/* {userAddress && <MintJobRoleNFTButton userAddress={userAddress} />} */}
         <Button style={buttonStyle}>Options</Button>
         <Button style={buttonStyle}>SELL</Button>
         <Button style={buttonStyle}>LIST</Button>

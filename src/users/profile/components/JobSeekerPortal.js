@@ -1,12 +1,10 @@
 // /src/users/profile/components/JobSeekerPortal.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 import MetaMaskConnectButton from './MetaMaskConnectButton';
-import MintJobRoleNFTButton from '../../utils/MintJobRoleNFTButton';
 
-const JobSeekerPortal = ({ onConnect }) => {
-  const [userAddress, setUserAddress] = useState(null);// State to hold the user's Ethereum address
-  const userId = "exampleUserId";
+const JobSeekerPortal = () => {
+  const [userAddress, setUserAddress] = useState('');
 
   const ovalStyle = {
     position: 'relative',
@@ -38,21 +36,26 @@ const JobSeekerPortal = ({ onConnect }) => {
     margin: '4px 4px 0px 4px',
   };
 
-// Callback function to handle the connection and receive the user's Ethereum address
+  // Effect to check for stored user address
+  useEffect(() => {
+    const storedAddress = localStorage.getItem(userAddress);
+    if (storedAddress) {
+      setUserAddress(storedAddress);
+    }
+  }, []);
+
+  // Callback function to handle the connection and receive the user's Ethereum address
   const handleConnect = (account) => {
     console.log(`Connected to MetaMask with account: ${account}`);
     setUserAddress(account); // Update the state with the connected user's address
-    onConnect(account); // Pass the user's Ethereum address to the parent component
+    localStorage.setItem('userAddress', account); // Persist user's address in localStorage
   };
   
- return (
+  return (
     <div style={ovalStyle}>
       <div style={buttonContainerStyle}>
-        <MetaMaskConnectButton userId={userId} onConnect={handleConnect} />
-        {/* Pass the userAddress state to the MintJobRoleNFTButton */}
-        <MintJobRoleNFTButton userAddress={userAddress} />
+        <MetaMaskConnectButton onConnect={handleConnect} />
         <Button style={buttonStyle}>Options</Button>
-
         <Button style={buttonStyle}>BURN</Button>
       </div>
     </div>
